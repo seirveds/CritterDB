@@ -1,8 +1,19 @@
 <template>
-  <b-card class="crittercard" :header="name" header-tag="h4">
+  <b-card class="crittercard bug" header-tag="header">
+    <template #header>
+      <h4 class="mb-0">{{ name }}</h4>
+    </template>
     <img v-bind:src="`data:image/png;base64, ${image}`"/>
-    <b-card-text>Where: {{ location }}</b-card-text>
-    <b-card-text>Selling price: {{ selling_price }}</b-card-text>
+    <b-row class="pl-2 pr-2">
+      <b-col class="text-left" cols=5>
+        <p class="mb-0"><b>Habitat: </b></p>
+        <p class="mb-0"><b>Price: </b></p>
+      </b-col>
+      <b-col class="text-right">
+        <p class="mb-0">{{ location }}</p>
+        <p class="mb-0">{{ selling_price }}</p>
+      </b-col>
+    </b-row>
     <!-- <b-card-text>Months: {{ months_available }}</b-card-text>
     <b-card-text>Time: {{ time_available }}</b-card-text> -->
   </b-card>

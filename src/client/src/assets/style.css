@@ -2,6 +2,18 @@
   max-width: 19rem;
 }
 
+.crittercard.fish > header {
+  background-color: #66ccff;
+}
+
+.crittercard.bug > header {
+  background-color: #caed78;
+}
+
+.crittercard.seacreature > header {
+  background-color: #66a6ff;
+}
+
 .crittercard .card-body img {
   width: 5rem;
   height: 5rem;
@@ -43,4 +55,8 @@
   background-color: white;
   border: 1px solid white;
   border-radius: 3px;
+}
+
+.filter-click:hover {
+  cursor: pointer;
 }
