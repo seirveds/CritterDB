@@ -1,0 +1,21 @@
+- App:
+    - Groeperen op spel & type
+    - Spel als argument?
+    - maand/tijd als argument
+- Scraper:
+    - Halve maand beschikbaar (mitten crab, moonlight jelly)
+    - (fish) bij Anchovy
+- Client:
+    - dropdown header reset na click
+    - zoek optie
+    - all / available switch
+    
+    - filters
+    - styling voor tijd/maand beschikbaar
+    - card styling
+        - icons ipv text (font awesome fish)
+        - header template (card docs)
+        - card columns -> card rows (slicing groepjes van 3)
+            - met footer alle rijen even hoog houden
+    - collapsible
+    - kleur van header/achtergrond verandert obv seizoen

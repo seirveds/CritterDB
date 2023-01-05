@@ -1,0 +1,46 @@
+.crittercard {
+  max-width: 19rem;
+}
+
+.crittercard .card-body img {
+  width: 5rem;
+  height: 5rem;
+}
+
+@media (max-width: 990px) {
+  .card-columns {
+    column-count: 2 !important;
+  }  
+}
+
+@media (min-width: 1280px) {
+  .card-columns {
+    column-count: 3 !important;
+  }  
+}
+
+.navbar {
+  background-color: cornflowerblue;
+}
+
+.footer {
+  background-color: cornflowerblue;
+  color: white;
+  min-height: 6em;
+  padding-top: 0.75em;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+#app {
+  background-color: #f1f5fd !important;
+}
+
+.container {
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 3px;
+}

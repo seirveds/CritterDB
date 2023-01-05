@@ -1,0 +1,34 @@
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import './assets/style.css';
+import '@babel/polyfill';
+import 'mutationobserver-shim';
+import axios from 'axios';
+import Vue from 'vue';
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {
+  faFish,
+  faSpider,
+  faPersonSwimming,
+} from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import App from './App.vue';
+import router from './router';
+
+library.add(faFish, faSpider, faPersonSwimming, faGithub);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.config.productionTip = false;
+Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
+
+// Global vars
+Vue.prototype.$server = 'http://127.0.0.1:5000';
+Vue.prototype.$http = axios;
+
+new Vue({
+  router,
+  render: (h) => h(App),
+}).$mount('#app');
