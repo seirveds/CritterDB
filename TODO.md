@@ -1,6 +1,6 @@
 - App:
-    - Groeperen op spel & type
-    - Spel als argument?
+    - ~~route per spel~~
+    - ~~Groeperen op type~~
     - maand/tijd als argument
 - Scraper:
     - Halve maand beschikbaar (mitten crab, moonlight jelly)
@@ -8,8 +8,7 @@
 - Client:
     - dropdown header reset na click
     - zoek optie
-    - all / available switch
-    
+    - ~~all / available switch~~
     - filters
     - styling voor tijd/maand beschikbaar
     - card styling
@@ -19,3 +18,4 @@
             - met footer alle rijen even hoog houden
     - collapsible
     - kleur van header/achtergrond verandert obv seizoen
+    - 404 handling

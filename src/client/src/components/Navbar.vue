@@ -15,10 +15,10 @@
             v-for="option in navbar.options"
             :key="option.value"
             :value="option.value"
-            :active="option.value == navbar.selection"
+            :active="option.text == navbar.selection"
             :disabled="option.disabled"
             :href="option.href"
-            @click="navbar.selection = option.value"
+            @click="navbarClick(option)"
           >
             {{  option.text }}
           </b-dropdown-item>
@@ -36,22 +36,28 @@
 <script>
 export default {
   name: 'Navbar',
+  emits: [
+    'selected-game-change',
+  ],
   data() {
     return {
       navbar: {
         options: [
-          { value: 'Animal Crossing', text: 'Animal Crossing', href: '/animalcrossing', disabled: true },  // eslint-disable-line
-          { value: 'Wild World', text: 'Wild World', href: '/wildworld', disabled: true },  // eslint-disable-line
-          { value: 'City Folk', text: 'City Folk', href: '/cityfolk', disabled: true },  // eslint-disable-line
-          { value: 'New Leaf', text: 'New Leaf', href: '/newleaf', disabled: true },  // eslint-disable-line
-          { value: 'New Horizons', text: 'New Horizons', href: '/newhorizons', disabled: false },  // eslint-disable-line
+          { value: 'animalcrossing', text: 'Animal Crossing' },
+          { value: 'wildworld', text: 'Wild World' },
+          { value: 'cityfolk', text: 'City Folk' },
+          { value: 'newleaf', text: 'New Leaf' },
+          { value: 'newhorizons', text: 'New Horizons' },
         ],
         selection: 'New Horizons',
       },
     };
   },
   methods: {
-
+    navbarClick(option) {
+      this.navbar.selection = option.text;
+      this.$emit('selected-game-change', option.value);
+    },
   },
 };
 </script>

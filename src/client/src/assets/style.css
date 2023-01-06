@@ -14,9 +14,14 @@
   background-color: #66a6ff;
 }
 
+.crittercard .card-body {
+  padding-top: 0;
+}
+
 .crittercard .card-body img {
-  width: 5rem;
-  height: 5rem;
+  width: 128px;
+  height: 128px;
+  image-rendering: pixelated;
 }
 
 @media (max-width: 990px) {
@@ -55,6 +60,7 @@
   background-color: white;
   border: 1px solid white;
   border-radius: 3px;
+  flex: 1;
 }
 
 .filter-click:hover {
