@@ -4,7 +4,7 @@
     <b-container class="mt-2 mb-5">
       <b-row>
         <b-col class="text-left">
-          <h6 class="mt-3 filter-click"
+          <h6 class="mt-3 clickable"
             @click="filter_visible = !filter_visible"
             v-b-toggle.filter-collapse
           >
@@ -26,10 +26,20 @@
                 </b-form-group>
               </b-row>
               <b-row>
-                <p><b>Months:</b></p>
+                <p class="mr-2"><b>Months:</b></p>
               </b-row>
               <b-row>
-                <p><b>Time:</b></p>
+                <p class="mr-2"><b>Time:</b></p>
+              </b-row>
+              <b-row>
+                <p class="mr-2"><b>Sort by:</b></p>
+                <b-form-select
+                  v-model="filters.sort_selection"
+                  @change="sortData"
+                  class="w-25 pt-0 pb-0"
+                  :options="filters.sort_options"
+                >
+                </b-form-select>
               </b-row>
             </b-card>
           </b-collapse>
@@ -37,53 +47,12 @@
       </b-row>
       <b-row>
         <b-col>
-          <FishHeader/>
-          <b-card-group columns>
-            <FishCard
-              v-for="fish in critters.fish"
-              :key="fish.id"
-              :name="fish.name"
-              :num="fish.num"
-              :location="fish.location"
-              :shadow_size="fish.shadow_size"
-              :selling_price="fish.selling_price"
-              :months_available="fish.months_available"
-              :time_available="fish.time_available"
-              :image="fish.b64_img"
-            />
-          </b-card-group>
+          <FishSection :fish="critters.fish"/>
 
-          <BugHeader/>
-          <b-card-group columns>
-            <BugCard
-              v-for="bug in critters.bug"
-              :key="bug.id"
-              :name="bug.name"
-              :num="bug.num"
-              :location="bug.location"
-              :selling_price="bug.selling_price"
-              :months_available="bug.months_available"
-              :time_available="bug.time_available"
-              :image="bug.b64_img"
-            />
-          </b-card-group>
+          <BugSection :bugs="critters.bug"/>
 
-          <SeaCreatureHeader/>
-          <b-card-group columns>
-            <SeaCreatureCard
-              v-for="sc in critters.sea_creature"
-              :key="sc.id"
-              :name="sc.name"
-              :num="sc.num"
-              :location="sc.location"
-              :shadow_size="sc.shadow_size"
-              :shadow_movement="sc.shadow_movement"
-              :selling_price="sc.selling_price"
-              :months_available="sc.months_available"
-              :time_available="sc.time_available"
-              :image="sc.b64_img"
-            />
-          </b-card-group>
+          <SeaCreatureHeader :seacreatures="critters.sea_creature"/>
+
         </b-col>
       </b-row>
     </b-container>
@@ -91,24 +60,18 @@
 </template>
 
 <script>
-import BugCard from '../components/cards/BugCard.vue';
-import FishCard from '../components/cards/FishCard.vue';
-import SeaCreatureCard from '../components/cards/SeaCreatureCard.vue';
-
-import BugHeader from '../components/headers/BugHeader.vue';
-import FishHeader from '../components/headers/FishHeader.vue';
-import SeaCreatureHeader from '../components/headers/SeaCreatureHeader.vue';
+import { _ } from 'vue-underscore';
+import BugSection from '../components/critterSections/BugSection.vue';
+import FishSection from '../components/critterSections/FishSection.vue';
+import SeaCreatureHeader from '../components/critterSections/SeaCreatureHeader.vue';
 
 import Navbar from '../components/Navbar.vue';
 
 export default {
   name: 'NewHorizons',
   components: {
-    BugCard,
-    FishCard,
-    SeaCreatureCard,
-    BugHeader,
-    FishHeader,
+    BugSection,
+    FishSection,
     SeaCreatureHeader,
     Navbar,
   },
@@ -122,7 +85,14 @@ export default {
       game_name: 'newhorizons',
       filter_visible: false,
       filters: {
-        show_filter_selected: 'all',
+        show_filter_selected: 'now',
+        sort_options: [
+          { value: 'num', text: 'In-game order' },
+          { value: 'name', text: 'Name' },
+          { value: 'location', text: 'Habitat' },
+          { value: 'selling_price', text: 'Price' },
+        ],
+        sort_selection: 'num',
       },
     };
   },
@@ -148,6 +118,12 @@ export default {
     updateGameData(game) {
       this.game_name = game;
       this.getData();
+    },
+    sortData() {
+      const sortby = this.filters.sort_selection;
+      this.critters.fish = _.sortBy(this.critters.fish, sortby);
+      this.critters.bug = _.sortBy(this.critters.bug, sortby);
+      this.critters.sea_creature = _.sortBy(this.critters.sea_creature, sortby);
     },
   },
   created() {

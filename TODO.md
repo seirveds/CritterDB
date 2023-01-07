@@ -2,6 +2,7 @@
     - ~~route per spel~~
     - ~~Groeperen op type~~
     - maand/tijd als argument
+    - lobster dubbel in sea creatures
 - Scraper:
     - Halve maand beschikbaar (mitten crab, moonlight jelly)
     - (fish) bij Anchovy

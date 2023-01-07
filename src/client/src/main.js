@@ -3,6 +3,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import './assets/style.css';
 import '@babel/polyfill';
 import 'mutationobserver-shim';
+import underscore from 'vue-underscore';
 import axios from 'axios';
 import Vue from 'vue';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
@@ -23,6 +24,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+Vue.use(underscore);
 
 // Global vars
 Vue.prototype.$server = 'http://127.0.0.1:5000';

@@ -63,6 +63,6 @@
   flex: 1;
 }
 
-.filter-click:hover {
+.clickable:hover {
   cursor: pointer;
 }
