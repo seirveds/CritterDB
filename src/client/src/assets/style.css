@@ -66,3 +66,7 @@
 .clickable:hover {
   cursor: pointer;
 }
+
+.invisible {
+  display: none;
+}

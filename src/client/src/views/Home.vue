@@ -51,8 +51,9 @@
 
           <BugSection :bugs="critters.bug"/>
 
-          <SeaCreatureHeader :seacreatures="critters.sea_creature"/>
-
+          <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
+            <SeaCreatureSection :seacreatures="critters.sea_creature"/>
+          </div>
         </b-col>
       </b-row>
     </b-container>
@@ -63,7 +64,7 @@
 import { _ } from 'vue-underscore';
 import BugSection from '../components/critterSections/BugSection.vue';
 import FishSection from '../components/critterSections/FishSection.vue';
-import SeaCreatureHeader from '../components/critterSections/SeaCreatureHeader.vue';
+import SeaCreatureSection from '../components/critterSections/SeaCreatureSection.vue';
 
 import Navbar from '../components/Navbar.vue';
 
@@ -72,7 +73,7 @@ export default {
   components: {
     BugSection,
     FishSection,
-    SeaCreatureHeader,
+    SeaCreatureSection,
     Navbar,
   },
   data() {
@@ -82,6 +83,7 @@ export default {
         bug: [],
         sea_creature: [],
       },
+      sea_creature_games: ['newleaf', 'newhorizons'],
       game_name: 'newhorizons',
       filter_visible: false,
       filters: {
