@@ -4,7 +4,7 @@
       <b-col class="align-left">
         <h2 class="text-left mt-3">
           <font-awesome-icon icon="fa-solid fa-person-swimming" class="mr-1"/>
-          Sea creatures
+          Sea creatures <span class="critter-section-count">({{ seacreatures.length }})</span>
         </h2>
       </b-col>
       <b-col class="align-right">

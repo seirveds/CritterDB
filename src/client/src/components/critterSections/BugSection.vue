@@ -4,7 +4,7 @@
       <b-col class="align-left">
         <h2 class="text-left mt-3">
           <font-awesome-icon icon="fa-solid fa-spider" class="mr-1"/>
-          Bugs
+          Bugs <span class="critter-section-count">({{ bugs.length }})</span>
         </h2>
       </b-col>
       <b-col class="align-right">

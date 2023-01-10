@@ -1,5 +1,6 @@
 .crittercard {
   max-width: 19rem;
+  /* display: inline-block; */
 }
 
 .crittercard.fish > header {
@@ -22,6 +23,11 @@
   width: 128px;
   height: 128px;
   image-rendering: pixelated;
+}
+
+.critter-section-count {
+  font-size: 0.5em;
+  vertical-align: text-top;
 }
 
 @media (max-width: 990px) {
@@ -69,4 +75,21 @@
 
 .invisible {
   display: none;
+}
+
+.image-button {
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  margin-right: 0.5em;
+}
+
+.image-button[aria-pressed="false"] img {
+  filter: grayscale(0.9);
+}
+
+.image-button img {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 5px;
 }
