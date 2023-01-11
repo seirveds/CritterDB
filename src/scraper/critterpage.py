@@ -174,6 +174,10 @@ class CritterPage:
                             for month in month_range:
                                 infobox_data["time_available"][month] = hour_range
             elif name == "Location":
+                # Appended for all new leaf bugs that appear on tortimer island, remove from
+                # string as we already have a flag for this
+                value = value.replace("(can be found on Tortimer Island)", "")
+                
                 infobox_data["location"] = value.strip()
             elif "Selling price" in name: # New Horizons is called selling prices
                 # Flick/CJ price is always normal sell * 1.5 so we can remove it from data
