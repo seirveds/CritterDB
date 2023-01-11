@@ -177,7 +177,17 @@ class CritterPage:
                 # Appended for all new leaf bugs that appear on tortimer island, remove from
                 # string as we already have a flag for this
                 value = value.replace("(can be found on Tortimer Island)", "")
-                
+
+                # New leaf fish also have Tortimer appended
+                value = value.replace("Tortimer", "")
+
+                # Gamecube critters have no newlines in location, we use regex to insert spacing.
+                # New lines always start with 'On', so we can narrow down regex to prevent false matches.
+                value = re.sub(r"[a-z]O", "/", value)
+
+                # Remove footnotes
+                value = re.sub(r"\[nb \d\]", "", value)
+
                 infobox_data["location"] = value.strip()
             elif "Selling price" in name: # New Horizons is called selling prices
                 # Flick/CJ price is always normal sell * 1.5 so we can remove it from data
@@ -185,6 +195,8 @@ class CritterPage:
                     value = re.sub(r"Flick.*", "", value)
                 if "C.J." in value:
                     value = re.sub(r"C.J.*", "", value)
+                if "prior" in value.lower():  # Blowfish page
+                    value = re.sub(r"[Pp]rior.*", "", value)
 
                 # Price is comma separated and can contain text, use regex to remove
                 # everything that is not a number
