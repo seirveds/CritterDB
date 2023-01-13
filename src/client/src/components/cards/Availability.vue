@@ -46,13 +46,17 @@ export default {
     styleMonthAbbr(m) {
       const d = new Date();
       const monthNo = d.getMonth() + 1;
+
+      let out = '';
       if (this.months_available.includes(m.num)) {
-        if (m.num === monthNo) {
-          return 'active-month available-month';
-        }
-        return 'available-month';
+        out += 'available-month ';
       }
-      return '';
+
+      if (m.num === monthNo) {
+        out += 'active-month ';
+      }
+
+      return out;
     },
   },
 };
