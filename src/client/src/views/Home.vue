@@ -2,6 +2,7 @@
   <div>
     <Navbar @selected-game-change="updateGameData"/>
     <b-container class="mt-2 mb-5">
+      <!-- Filters -->
       <b-row>
         <b-col class="text-left">
           <h6 class="mt-3 clickable"
@@ -12,6 +13,7 @@
           </h6>
           <b-collapse id="filter-collapse">
             <b-card>
+              <!-- All/available filter -->
               <b-row>
                 <p class="mr-2"><b>Show:</b></p>
                 <b-form-group>
@@ -25,12 +27,22 @@
                   </b-form-radio-group>
                 </b-form-group>
               </b-row>
+              <!-- Months filter -->
               <b-row>
                 <p class="mr-2"><b>Months:</b></p>
+                <b-form-select
+                  v-model="filters.show_filter_selected"
+                  @change="getData"
+                  class="w-25 pt-0 pb-0"
+                  :options="filters.month_options"
+                >
+                </b-form-select>
               </b-row>
+              <!-- Time filter -->
               <b-row>
                 <p class="mr-2"><b>Time:</b></p>
               </b-row>
+              <!-- Sort by -->
               <b-row>
                 <p class="mr-2"><b>Sort by:</b></p>
                 <b-form-select
@@ -45,12 +57,11 @@
           </b-collapse>
         </b-col>
       </b-row>
+      <!-- Content -->
       <b-row>
         <b-col>
           <FishSection :fish="critters.fish"/>
-
           <BugSection :bugs="critters.bug"/>
-
           <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
             <SeaCreatureSection :seacreatures="critters.sea_creature"/>
           </div>
@@ -89,12 +100,26 @@ export default {
       new_col_count: null, // set in mounted()
       filter_visible: false,
       filters: {
-        show_filter_selected: 'now', // default value availability filter
+        show_filter_selected: 'now', // default value availability filter, can also be month
         sort_options: [
           { value: 'num', text: 'In-game order' },
           { value: 'name', text: 'Name' },
           { value: 'location', text: 'Habitat' },
           { value: 'selling_price', text: 'Price' },
+        ],
+        month_options: [ // Months dropdown
+          { value: 'January', text: 'January', num: 1 },
+          { value: 'February', text: 'February', num: 2 },
+          { value: 'March', text: 'March', num: 3 },
+          { value: 'April', text: 'April', num: 4 },
+          { value: 'May', text: 'May', num: 5 },
+          { value: 'June', text: 'June', num: 6 },
+          { value: 'July', text: 'July', num: 7 },
+          { value: 'August', text: 'August', num: 8 },
+          { value: 'September', text: 'September', num: 9 },
+          { value: 'October', text: 'October', num: 10 },
+          { value: 'November', text: 'November', num: 11 },
+          { value: 'December', text: 'December', num: 12 },
         ],
         sort_selection: 'num', // default value sort dropdown
       },
@@ -102,7 +127,7 @@ export default {
   },
   methods: {
     getData() {
-      this.$http.get(`${this.$server}/${this.filters.show_filter_selected}/${this.game_name}`)
+      this.$http.get(`${this.$server}/${this.game_name}/${this.filters.show_filter_selected}`)
         .then((res) => {
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
@@ -122,14 +147,16 @@ export default {
     sortAndReorderData() {
       // Sorts data based on field selected in filter sort section
       // Sorting is done ascending (a-z)
-      const sortby = this.filters.sort_selection;
-      this.critters.fish = _.sortBy(this.critters.fish, sortby);
-      this.critters.bug = _.sortBy(this.critters.bug, sortby);
-      this.critters.sea_creature = _.sortBy(this.critters.sea_creature, sortby);
+      this.critters.fish = this.sortArray(this.critters.fish);
+      this.critters.bug = this.sortArray(this.critters.bug);
+      this.critters.sea_creature = this.sortArray(this.critters.sea_creature);
       // Reorders data so columns can be read left to right
       this.critters.fish = this.reorderArray(this.critters.fish);
       this.critters.bug = this.reorderArray(this.critters.bug);
       this.critters.sea_creature = this.reorderArray(this.critters.sea_creature);
+    },
+    sortArray(arr) {
+      return _.sortBy(arr, this.filters.sort_selection);
     },
     reorderArray(arr) {
       // Reorders array based on amount of columns of cards in card group.
@@ -174,6 +201,9 @@ export default {
         }
       }
       return out;
+    },
+    filterArray(arr) {
+      return arr.map((r) => r.months_available.includes(this.month_selection));
     },
     getFilterIcon() {
       // Change icon of top filter text to downwards caret if filter collapse

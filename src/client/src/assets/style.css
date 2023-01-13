@@ -7,6 +7,9 @@
   background-color: #66ccff;
 }
 
+.crittercard.bug {
+  min-height: 305px;
+}
 .crittercard.bug > header {
   background-color: #caed78;
 }
@@ -28,6 +31,34 @@
 .critter-section-count {
   font-size: 0.5em;
   vertical-align: text-top;
+}
+
+.crittercard-l-col {
+  text-align: left !important;
+  padding: 0 !important;
+}
+
+.crittercard-r-col {
+  text-align: right !important;
+  padding: 0 !important;
+}
+
+.crittercard-row {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.month-row {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.active-month {
+  background-color: #66a6ff;
+}
+
+.available-month {
+  font-weight: bold;
 }
 
 @media (max-width: 990px) {

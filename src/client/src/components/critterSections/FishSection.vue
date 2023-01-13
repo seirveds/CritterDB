@@ -19,7 +19,6 @@
           >
             <img :src="btn.image"/>
           </b-button>
-          <!-- <b-button class="image-button"><img src="~@/assets/icons/pier.png"/></b-button> -->
         </div>
       </b-col>
       <b-col class="align-right col-1">
@@ -105,8 +104,14 @@ export default {
     fishArray() {
       // eslint-disable-next-line
       const selectedButtons = this.filterButtons.filter((btn) => btn.selected).map((btn) => btn.value);
-      // eslint-disable-next-line
-      return this.fish.filter((f) => selectedButtons.some((v) => f.location.toLowerCase().includes(v)));
+      if (selectedButtons.length < this.filterButtons.length) {
+        // eslint-disable-next-line
+        let filtered = this.fish.filter((f) => selectedButtons.some((v) => f.location.toLowerCase().includes(v)));
+        filtered = this.$parent.sortArray(filtered);
+        filtered = this.$parent.reorderArray(filtered);
+        return filtered;
+      }
+      return this.fish;
     },
   },
 };

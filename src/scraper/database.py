@@ -40,11 +40,15 @@ class CritterDatabase:
                 tortimer_island_exclusive BIT
             )
         """)
+        self.execute("""
+            CREATE UNIQUE INDEX idx
+            ON CRITTERS (name, game, type);
+        """)
 
     def insert_row(self, infobox: dict):
         try:
             query = f"""
-                INSERT INTO CRITTERS (
+                INSERT OR IGNORE INTO CRITTERS (
                     name, game, type, num, b64_img, catching_quote, months_available,
                     time_available, tortimer_island, location, selling_price, shadow_size,
                     shadow_movement, spawn_requirement, tortimer_island_exclusive

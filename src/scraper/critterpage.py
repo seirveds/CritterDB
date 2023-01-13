@@ -51,7 +51,7 @@ class CritterPage:
         infobox_data = dict()
 
         infobox_data["type"] = get_infobox_type(infobox)
-        infobox_data["name"] = self.title
+        infobox_data["name"] = re.sub(r"\(\w+\)", "", self.title).strip()
 
         # Left side of infobox is easy, only three elements relevant
         infobox_data["num"] = infobox.find("small").text.replace("#", "")
@@ -178,12 +178,16 @@ class CritterPage:
                 # string as we already have a flag for this
                 value = value.replace("(can be found on Tortimer Island)", "")
 
-                # New leaf fish also have Tortimer appended
-                value = value.replace("Tortimer", "")
+                # New leaf fish also have Tortimer Island appended. We only want
+                # to remove this if it is the end of the string, otherwise we keep it
+                # (e.g. at hermit crab page we want to keep '(Exclusive to Tortimer Island)')
+                if not value.startswith("Tortimer"):  # Skip tortimer exclusive fish, their location is 'Tortimer island'
+                    value = re.sub(r"Tortimer[\w\s]*$", "", value)
 
-                # Gamecube critters have no newlines in location, we use regex to insert spacing.
-                # New lines always start with 'On', so we can narrow down regex to prevent false matches.
-                value = re.sub(r"[a-z]O", "/", value)
+                # Gamecube critters have no newlines in location, we use regex to insert spacing
+                # and remove On occurences
+                # New lines always start with 'On or In', so we can narrow down regex to prevent false matches.
+                value = re.sub(r"([a-z])On ", r"\1/", value)
 
                 # Remove footnotes
                 value = re.sub(r"\[nb \d\]", "", value)
