@@ -1,4 +1,5 @@
 import re
+from unicodedata import normalize
 from bs4.element import Tag
 from utils import hour_range_to_hour_numbers, image_url_to_b64, month_range_to_month_numbers, url_to_soup, get_infobox_type
 
@@ -110,6 +111,7 @@ class CritterPage:
                 
                 # Sort for neatness
                 infobox_data["months_available"] = sorted(infobox_data["months_available"])
+                assert infobox_data["months_available"]
             elif name == "Time of day":
                 # Use dict to keep track of all available hours per month, as
                 # hours can differ per month
@@ -120,7 +122,7 @@ class CritterPage:
                         infobox_data["time_available"][month] = [h for h in range(0, 24)]
                 else:
                     # Match time pattern like 8 AM – 7 PM (spaces optional)
-                    time_pattern = r"^\d{1,2}\s?(AM|PM)\s?–\s?\d{1,2}\s?(AM|PM)$"
+                    time_pattern = r"\d{1,2}\s?(?:AM|PM)\s?–\s?\d{1,2}\s?(?:AM|PM)"
 
                     # Match time pattern ending with month(s) between parentheses
                     # (e.g. 8 AM – 7 PM (Jun) or 8 AM – 5 PM (Jul – Aug))
@@ -143,15 +145,8 @@ class CritterPage:
                     value = re.sub(r"\[nb \d\]", "", value)
 
                     # Time available has 3 formats
-                    # Easy format, one time range for all months
-                    if re.match(time_pattern, value.strip()):
-                        hour_range = hour_range_to_hour_numbers(value)
-                        # Same list for every month, but needed for compatability
-                        # with critters that have different times per month
-                        for month in infobox_data["months_available"]:
-                            infobox_data["time_available"][month] = hour_range
                     # Times are formatted like Mar – Jun:8 AM – 4 PMSep:8 AM – 4 PM
-                    elif matches := re.findall(month_start_pattern, value):
+                    if matches := re.findall(month_start_pattern, value):
                         for match in matches:
                             months, hours = match.split(":")
                             
@@ -164,8 +159,8 @@ class CritterPage:
                     # Times are formatted like '8 AM – 7 PM (Jun)  8 AM – 5 PM (Jul – Aug)'
                     elif matches := re.findall(month_end_pattern, value):
                         for match in matches:
-                            hours = re.search(time_pattern[:-1], match).group(0)
-                            months = re.sub(time_pattern[:-1], "", match).strip()
+                            hours = re.search(time_pattern, match).group(0)
+                            months = re.sub(time_pattern, "", match).strip()
 
                             # Transform string ranges to int ranges
                             month_range = month_range_to_month_numbers(months)
@@ -173,6 +168,19 @@ class CritterPage:
                             
                             for month in month_range:
                                 infobox_data["time_available"][month] = hour_range
+                    # Easy format, one or more time ranges are the same for all months
+                    # Easiest one last, one or mutliple occurences of times like 4 Am - 8 AM,
+                    # sometimes multiple times separated by delimiter like ; or &
+                    elif matches := re.findall(time_pattern, value.strip()):
+                        hours = []
+                        for match in matches:
+                            hour_range = hour_range_to_hour_numbers(match)
+                            hours.extend(hour_range)
+                        # Same list for every month, but needed for compatability
+                        # with critters that have different times per month
+                        for month in infobox_data["months_available"]:
+                            infobox_data["time_available"][month] = hours
+                    assert infobox_data["time_available"]
             elif name == "Location":
                 # Appended for all new leaf bugs that appear on tortimer island, remove from
                 # string as we already have a flag for this
@@ -193,6 +201,7 @@ class CritterPage:
                 value = re.sub(r"\[nb \d\]", "", value)
 
                 infobox_data["location"] = value.strip()
+                assert infobox_data["location"]
             elif "Selling price" in name: # New Horizons is called selling prices
                 # Flick/CJ price is always normal sell * 1.5 so we can remove it from data
                 if "Flick" in value:
@@ -207,6 +216,7 @@ class CritterPage:
                 value = re.sub(r"\D", "", value)
                 
                 infobox_data["selling_price"] = int(value)
+                assert infobox_data["selling_price"]
             # Only for new horizons
             elif name == "Spawn requirement":
                 infobox_data["spawn_requirement"] = value.strip()
@@ -218,3 +228,6 @@ class CritterPage:
                 infobox_data["shadow_movement"] = value.strip()        
             
         return infobox_data
+
+if __name__ == "__main__":
+    CritterPage("https://nookipedia.com/wiki/Vampire_squid")

@@ -19,7 +19,10 @@ if __name__ == "__main__":
 
     critter_urls = [url for url in critter_urls if url not in url_blacklist]
 
-    critter_pages = [CritterPage(url) for url in tqdm(critter_urls, desc="Scraping infoboxes")]
+    critter_pages = []
+    for url in (pbar:=tqdm(critter_urls)):
+        pbar.set_description(f"Scraping infoboxes ({url})")
+        critter_pages.append(CritterPage(url))
     
     infoboxes = []
     for page in critter_pages:

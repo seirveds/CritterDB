@@ -1,3 +1,4 @@
+from ast import literal_eval
 import json
 import logging
 import os
@@ -79,7 +80,21 @@ class CritterDatabase:
         """Retrieve data from database with select query"""
         result = self.cursor.execute(query)
         column_names = [tup[0] for tup in result.description]
-        return [dict(zip(column_names, row)) for row in result.fetchall()]
+        res = [dict(zip(column_names, row)) for row in result.fetchall()]
+        return self.fix_dtypes(res)
+
+    @staticmethod
+    def fix_dtypes(res: list[dict]) -> list[dict]:
+        """
+        Fix dtypes of result from json columns. Transform data returned as string
+        to list and dict.
+        """
+        json_columns = ["time_available", "months_available"]
+        for row in res:
+            for col in json_columns:
+                if col in row:
+                    row[col] = literal_eval(row[col])
+        return res
 
     def close(self):
         self.connection.close()

@@ -13,6 +13,11 @@ base_url = "https://nookipedia.com"
 url_blacklist = [
     "https://nookipedia.com/wiki/Herabuna",  # e+ exclusive
     "https://nookipedia.com/wiki/Moon_jellyfish",  # Available for half a month, dive critter in NH, fish in other games
+    # "https://nookipedia.com/wiki/Horned_elephant",  # TEMP
+    # "https://nookipedia.com/wiki/Stinkbug",  # TEMP
+    # "https://nookipedia.com/wiki/Eel",  # TEMP
+    # "https://nookipedia.com/wiki/Rainbow_trout",  # TEMP
+    # "https://nookipedia.com/wiki/Octopus_(fish)",  # TEMP
 ]
 
 
