@@ -50,6 +50,7 @@ def get_month_and_hour() -> Union[int, int]:
     now = datetime.now()
     return now.month, now.hour
 
+
 def group_query_result(res: list[dict]) -> dict:
     """Group list of dictionaries by type"""
     grouped = defaultdict(list)
@@ -59,19 +60,48 @@ def group_query_result(res: list[dict]) -> dict:
 
     return grouped
 
+
+def select_time_availability(res: list[dict], m: Union[int, None] = None) -> list[dict]:
+    """
+    Select available time for passed month from time_available entry.
+    Useurrent month if no month passed. We check if this month is present
+    in time_available dict, if this is not the case, we pick a random month from
+    the dict to return.
+    """
+    if m is None:
+        m, _ = get_month_and_hour()
+
+    for row in res:
+        # Check if selected month present in dict, if not, use first present key
+        if str(m) not in row["time_available"]:
+            m = list(row["time_available"].keys())[0]
+        # Transform dict with time availabilities per month to single
+        # list containing available hours for selected month
+        row["time_available"] = row["time_available"][str(m)]
+    return res
+
+
 def get_all_critters(game: str) -> dict:
     """Return all critters for passed game grouped by type."""
-    return group_query_result(db.query(all_query.format(game=game)))
+    res = db.query(all_query.format(game=game))
+    # Get time_available for current month if possible, otherwise
+    # random month
+    res = select_time_availability(res)
+    return group_query_result(res)
 
 def get_available_critters(game: str) -> dict:
     """Return critters available now in passed game grouped by type."""
     m, h = get_month_and_hour()
     res = db.query(available_now_query.format(m=m, h=h, game=game))
+    # Month chosen for time availability is current month
+    res = select_time_availability(res, m)
     return group_query_result(res)
+
 
 def get_monthly_critters(game: str, month: str) -> dict:
     """Return critters available for passed month in passed game grouped by type."""
     month_index = [m for m in month_name].index(month)
-    print(month_index)
     res = db.query(monthly_critters_query.format(m=month_index, game=game))
+    # Month chosen for time availability is passed month
+    res = select_time_availability(res, month_index)
     return group_query_result(res)
