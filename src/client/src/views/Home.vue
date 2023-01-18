@@ -14,44 +14,63 @@
           <b-collapse id="filter-collapse">
             <b-card>
               <!-- All/available filter -->
-              <b-row>
-                <p class="mr-2"><b>Show:</b></p>
-                <b-form-group>
-                  <b-form-radio-group
-                    id="show-filter"
-                    v-model="filters.show_filter_selected"
-                    @change="getData"
-                  >
-                    <b-form-radio value="all">All</b-form-radio>
-                    <b-form-radio value="now">Available now</b-form-radio>
-                  </b-form-radio-group>
-                </b-form-group>
+              <b-row class="mb-1">
+                <b-col xl="1" lg="2" sm="3">
+                  <p class="mb-0"><b>Show:</b></p>
+                </b-col>
+                <b-col lg="10" sm="12">
+                  <b-form-group>
+                    <b-form-radio-group
+                      id="show-filter"
+                      v-model="filters.month_selected"
+                      @change="getData"
+                    >
+                      <b-form-radio value="all">All</b-form-radio>
+                      <b-form-radio value="now">Available now</b-form-radio>
+                    </b-form-radio-group>
+                  </b-form-group>
+                </b-col>
               </b-row>
-              <!-- Months filter -->
-              <b-row>
-                <p class="mr-2"><b>Months:</b></p>
-                <b-form-select
-                  v-model="filters.show_filter_selected"
-                  @change="getData"
-                  class="w-25 pt-0 pb-0"
-                  :options="filters.month_options"
-                >
-                </b-form-select>
+              <!-- Month filter -->
+              <b-row class="mb-1">
+                <b-col xl="1" lg="2" sm="3">
+                  <p class="mb-0"><b>Month:</b></p>
+                </b-col>
+                <b-col lg="10" sm="12">
+                  <b-form-select
+                    v-model="filters.month_selected"
+                    @change="getData"
+                    class="w-25 pt-0 pb-0"
+                    :options="filters.month_options"
+                  >
+                  </b-form-select>
+                </b-col>
               </b-row>
               <!-- Time filter -->
-              <b-row>
+              <!-- <b-row>
                 <p class="mr-2"><b>Time:</b></p>
-              </b-row>
-              <!-- Sort by -->
-              <b-row>
-                <p class="mr-2"><b>Sort by:</b></p>
                 <b-form-select
-                  v-model="filters.sort_selection"
-                  @change="sortAndReorderData"
+                  v-model="filters.time_selected"
+                  @change="getData"
                   class="w-25 pt-0 pb-0"
-                  :options="filters.sort_options"
+                  :options="filters.time_options"
                 >
                 </b-form-select>
+              </b-row> -->
+              <!-- Sort by -->
+              <b-row class="mb-1">
+                <b-col xl="1" lg="2" sm="3">
+                  <p class="mb-0"><b>Sort:</b></p>
+                </b-col>
+                <b-col lg="10" sm="12">
+                  <b-form-select
+                    v-model="filters.sort_selection"
+                    @change="sortAndReorderData"
+                    class="w-25 pt-0 pb-0"
+                    :options="filters.sort_options"
+                  >
+                  </b-form-select>
+                </b-col>
               </b-row>
             </b-card>
           </b-collapse>
@@ -98,9 +117,11 @@ export default {
       game_name: 'newhorizons', // default game selected
       col_count: null, // set in mounted()
       new_col_count: null, // set in mounted()
+      loading: false,
       filter_visible: false,
       filters: {
-        show_filter_selected: 'now', // default value availability filter, can also be month
+        month_selected: 'now', // default value availability filter, can also be month
+        // time_selected: 'now',
         sort_options: [
           { value: 'num', text: 'In-game order' },
           { value: 'name', text: 'Name' },
@@ -108,26 +129,29 @@ export default {
           { value: 'selling_price', text: 'Price' },
         ],
         month_options: [ // Months dropdown
-          { value: 'January', text: 'January', num: 1 },
-          { value: 'February', text: 'February', num: 2 },
-          { value: 'March', text: 'March', num: 3 },
-          { value: 'April', text: 'April', num: 4 },
-          { value: 'May', text: 'May', num: 5 },
-          { value: 'June', text: 'June', num: 6 },
-          { value: 'July', text: 'July', num: 7 },
-          { value: 'August', text: 'August', num: 8 },
-          { value: 'September', text: 'September', num: 9 },
-          { value: 'October', text: 'October', num: 10 },
-          { value: 'November', text: 'November', num: 11 },
-          { value: 'December', text: 'December', num: 12 },
+          { value: 'january', text: 'January' },
+          { value: 'february', text: 'February' },
+          { value: 'march', text: 'March' },
+          { value: 'april', text: 'April' },
+          { value: 'may', text: 'May' },
+          { value: 'june', text: 'June' },
+          { value: 'july', text: 'July' },
+          { value: 'august', text: 'August' },
+          { value: 'september', text: 'September' },
+          { value: 'october', text: 'October' },
+          { value: 'november', text: 'November' },
+          { value: 'december', text: 'December' },
         ],
+        // time_options: [{ value: 'now', text: 'Now' }].concat(
+        //   _.range(24).map((i) => ({ value: i, text: `${String(i).padStart(2, '0')}:00` }))
+        // ),
         sort_selection: 'num', // default value sort dropdown
       },
     };
   },
   methods: {
     getData() {
-      this.$http.get(`${this.$server}/${this.game_name}/${this.filters.show_filter_selected}`)
+      this.$http.get(`${this.$server}/${this.game_name}/${this.filters.month_selected}`)
         .then((res) => {
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
@@ -138,6 +162,7 @@ export default {
           // eslint-disable-next-line
           console.error(error);
         });
+      this.loading = false;
     },
     updateGameData(game) {
       // Called when user selects game in header dropdown

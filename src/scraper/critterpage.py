@@ -181,6 +181,9 @@ class CritterPage:
                         for month in infobox_data["months_available"]:
                             infobox_data["time_available"][month] = hours
                     assert infobox_data["time_available"]
+                    # Sort time ranges for easier parsing in frontend
+                    for m in infobox_data["time_available"]:
+                        infobox_data["time_available"][m] = sorted(infobox_data["time_available"][m])
             elif name == "Location":
                 # Appended for all new leaf bugs that appear on tortimer island, remove from
                 # string as we already have a flag for this
@@ -230,4 +233,4 @@ class CritterPage:
         return infobox_data
 
 if __name__ == "__main__":
-    CritterPage("https://nookipedia.com/wiki/Vampire_squid")
+    print(CritterPage("https://nookipedia.com/wiki/Piranha").infoboxes[-1]["time_available"])

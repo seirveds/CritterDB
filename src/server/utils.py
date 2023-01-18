@@ -30,19 +30,6 @@ available_now_query = """
     )
 """
 
-monthly_critters_query = """
-    SELECT *
-    FROM CRITTERS
-    WHERE id IN (
-        SELECT DISTINCT 
-            C.id
-        FROM CRITTERS AS C,
-            json_each(months_available) AS MONTHS
-        WHERE MONTHS.value like {m}
-        AND LOWER(REPLACE(C.game, ' ', '')) == '{game}'
-    )
-"""
-
 all_query = "SELECT * FROM CRITTERS WHERE LOWER(REPLACE(game, ' ', '')) == '{game}'"
 
 def get_month_and_hour() -> Union[int, int]:
@@ -85,23 +72,23 @@ def get_all_critters(game: str) -> dict:
     """Return all critters for passed game grouped by type."""
     res = db.query(all_query.format(game=game))
     # Get time_available for current month if possible, otherwise
-    # random month
+    # get time from a random month
     res = select_time_availability(res)
     return group_query_result(res)
 
-def get_available_critters(game: str) -> dict:
-    """Return critters available now in passed game grouped by type."""
-    m, h = get_month_and_hour()
+
+def get_filtered_critters(game: str, month: str) -> dict:
+    """Return critters available for passed month and hour in passed game grouped by type."""
+    # If passed month is 'now' use current month
+    if month == 'now':
+        m, h = get_month_and_hour()
+    # If passed month is actually a month transform month name into month number
+    else:
+        m = [mth.lower() for mth in month_name].index(month)
+        h = "'%'"  # Dont look at time
+        
+
     res = db.query(available_now_query.format(m=m, h=h, game=game))
-    # Month chosen for time availability is current month
-    res = select_time_availability(res, m)
-    return group_query_result(res)
-
-
-def get_monthly_critters(game: str, month: str) -> dict:
-    """Return critters available for passed month in passed game grouped by type."""
-    month_index = [m for m in month_name].index(month)
-    res = db.query(monthly_critters_query.format(m=month_index, game=game))
     # Month chosen for time availability is passed month
-    res = select_time_availability(res, month_index)
+    res = select_time_availability(res, m)
     return group_query_result(res)

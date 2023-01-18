@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Header -->
     <b-row>
       <b-col class="align-left">
         <h2 class="text-left mt-3">
@@ -31,6 +32,7 @@
       </b-col>
     </b-row>
     <hr class="mt-0"/>
+    <!-- Content -->
     <b-collapse id="section-collapse-fish" visible>
       <b-card-group columns>
         <FishCard
