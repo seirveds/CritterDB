@@ -16,7 +16,7 @@
       <p class="mb-0"><b>Time available: </b></p>
     </b-row>
     <b-row class="crittercard-row">
-      <p>{{ formatTimeAvailable }}</p>
+      <div v-html="formatTimeAvailable"></div>
     </b-row>
   </div>
 </template>
@@ -100,10 +100,28 @@ export default {
       ranges = _.sortBy(ranges, (range) => (range[0]));
 
       let outString = '';  // eslint-disable-line
+      const d = new Date();
+      const currentHour = d.getHours();
       for (let i = 0; i < ranges.length; i += 1) {
-        outString += `${ranges[i][0]}:00 - ${ranges[i][1]}:00; `;
+        let spanClass = '';
+        // Two cases for a range; first hour is smaller than the second hour (easy)
+        if (
+          ranges[i][0] < ranges[i][1]
+          && currentHour >= ranges[i][0]
+          && currentHour <= ranges[i][1]
+        ) {
+          spanClass = 'active-time';
+        // Harder case; time range passes midnight
+        } else if (
+          ranges[i][0] > ranges[i][1]
+          && (currentHour >= ranges[i][0] || currentHour <= ranges[i][1])
+        ) {
+          spanClass = 'active-time';
+        }
+        outString += `<span class="${spanClass}">${ranges[i][0]}:00 - ${ranges[i][1]}:00</span>; `;
       }
-      return outString.slice(0, -2);
+      // Slice to remove trailing semicolon and space
+      return `<p>${outString.slice(0, -2)}</p>`;
     },
   },
 };

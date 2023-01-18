@@ -54,7 +54,11 @@
 }
 
 .active-month {
-  background-color: #66a6ff;
+  background-color: #66a6ff5d;
+}
+
+.active-time {
+  background-color: #66a6ff5d;
 }
 
 .available-month {
