@@ -116,5 +116,9 @@ export default {
       return this.fish;
     },
   },
+  updated() {
+    // TODO emit finish loading
+    console.log('TODO');
+  },
 };
 </script>

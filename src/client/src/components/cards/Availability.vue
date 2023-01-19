@@ -68,7 +68,7 @@ export default {
     formatTimeAvailable() {
       // Easy case
       if (this.time_available.length === 24) {
-        return 'All day';
+        return '<span class="active-time">All day</span>';
       }
 
       // Store ranges as arrays [startHour, endHour]
@@ -121,7 +121,7 @@ export default {
         outString += `<span class="${spanClass}">${ranges[i][0]}:00 - ${ranges[i][1]}:00</span>; `;
       }
       // Slice to remove trailing semicolon and space
-      return `<p>${outString.slice(0, -2)}</p>`;
+      return outString.slice(0, -2);
     },
   },
 };

@@ -1,16 +1,22 @@
 <template>
   <div>
     <Navbar @selected-game-change="updateGameData"/>
-    <b-container class="mt-2 mb-5">
-      <!-- Filters -->
+    <b-container class="mt-2 mb-5 pt-3">
+      <!-- Filters + header -->
       <b-row>
-        <b-col class="text-left">
-          <h6 class="mt-3 clickable"
+        <b-col class="text-left"><h1>{{ getAvailabilityHeader() }}</h1></b-col>
+        <b-col class="text-right" cols="2">
+          <h1 class="clickable"
+            style="width: fit-content; float: right"
             @click="filter_visible = !filter_visible"
             v-b-toggle.filter-collapse
           >
-            Filters <b-icon :icon="getFilterIcon(filter_visible)" />
-          </h6>
+            <b-icon :icon="getFilterIcon(filter_visible)"/>
+          </h1>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col class="text-left">
           <b-collapse id="filter-collapse">
             <b-card>
               <!-- All/available filter -->
@@ -77,16 +83,20 @@
         </b-col>
       </b-row>
       <!-- Content -->
-      <b-row>
+      <b-row class="mt-3 mb-3">
         <b-col>
-          <FishSection :fish="critters.fish"/>
-          <BugSection :bugs="critters.bug"/>
-          <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
-            <SeaCreatureSection :seacreatures="critters.sea_creature"/>
+          <b-spinner v-if="loading"/>
+          <div v-else>
+            <FishSection :fish="critters.fish"/>
+            <BugSection :bugs="critters.bug"/>
+            <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
+              <SeaCreatureSection :seacreatures="critters.sea_creature"/>
+            </div>
           </div>
         </b-col>
       </b-row>
     </b-container>
+    <Footer/>
   </div>
 </template>
 
@@ -96,6 +106,7 @@ import BugSection from '../components/critterSections/BugSection.vue';
 import FishSection from '../components/critterSections/FishSection.vue';
 import SeaCreatureSection from '../components/critterSections/SeaCreatureSection.vue';
 
+import Footer from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
 
 export default {
@@ -105,6 +116,7 @@ export default {
     FishSection,
     SeaCreatureSection,
     Navbar,
+    Footer,
   },
   data() {
     return {
@@ -113,11 +125,11 @@ export default {
         bug: [],
         sea_creature: [],
       },
+      loading: false,
       sea_creature_games: ['newleaf', 'newhorizons'],
       game_name: 'newhorizons', // default game selected
       col_count: null, // set in mounted()
       new_col_count: null, // set in mounted()
-      loading: false,
       filter_visible: false,
       filters: {
         month_selected: 'now', // default value availability filter, can also be month
@@ -151,6 +163,7 @@ export default {
   },
   methods: {
     getData() {
+      this.loading = true;
       this.$http.get(`${this.$server}/${this.game_name}/${this.filters.month_selected}`)
         .then((res) => {
           this.critters.fish = res.data.fish;
@@ -162,7 +175,12 @@ export default {
           // eslint-disable-next-line
           console.error(error);
         });
-      this.loading = false;
+      // Hacky solution, just wait 1 second before showing content again
+      // Fails if data takes more than 1 second to render
+      // TODO wait until child emits 'loading done' flag or smthing
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000000);
     },
     updateGameData(game) {
       // Called when user selects game in header dropdown
@@ -234,9 +252,18 @@ export default {
       // Change icon of top filter text to downwards caret if filter collapse
       // is closed, and upwards caret if filters are open
       if (this.filter_visible) {
-        return 'caret-up-fill';
+        return 'filter-square-fill';
       }
-      return 'caret-down-fill';
+      return 'filter-square';
+    },
+    getAvailabilityHeader() {
+      if (this.filters.month_selected === 'now') {
+        return 'Available now';
+      }
+      if (this.filters.month_selected === 'all') {
+        return 'All critters';
+      }
+      return `Available in ${this.filters.month_selected}`;
     },
     calculateColCount(width) {
       // Simple logic determining amount of columns in frontend
