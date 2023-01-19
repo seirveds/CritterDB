@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <Navbar @selected-game-change="updateGameData"/>
     <b-container class="mt-2 mb-5 pt-3">
       <!-- Filters + header -->
@@ -180,7 +180,7 @@ export default {
       // TODO wait until child emits 'loading done' flag or smthing
       setTimeout(() => {
         this.loading = false;
-      }, 1000000);
+      }, 1000);
     },
     updateGameData(game) {
       // Called when user selects game in header dropdown
@@ -254,7 +254,7 @@ export default {
       if (this.filter_visible) {
         return 'filter-square-fill';
       }
-      return 'filter-square';
+      return 'filter';
     },
     getAvailabilityHeader() {
       if (this.filters.month_selected === 'now') {

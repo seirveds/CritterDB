@@ -79,13 +79,12 @@
 
 .navbar {
   background-color: cornflowerblue;
-  height: 5vh !important;
 }
 
 .footer {
   background-color: cornflowerblue;
   color: white;
-  height: 10vh;
+  min-height: 6em;
   padding-top: 0.75em;
 }
 
@@ -96,13 +95,21 @@
 
 #app {
   background-color: #f1f5fd !important;
+  display: flex !important;
+  flex-flow: column !important;
+}
+
+.content {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
 }
 
 .container {
   background-color: white;
   border: 1px solid white;
   border-radius: 3px;
-  min-height: 40vh;
+  flex: 1 !important;
 }
 
 .clickable:hover {
@@ -128,8 +135,4 @@
   width: 2.5em;
   height: 2.5em;
   border-radius: 5px;
-}
-
-[v-cloak] {
-  display: none;
 }
