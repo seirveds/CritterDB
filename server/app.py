@@ -2,8 +2,8 @@ from calendar import month_name
 from typing import Union
 from flask import Flask, make_response, Response
 from flask_cors import CORS
-from src.server.errors import empty_data_error
-from src.server.utils import games, get_all_critters, get_filtered_critters
+from errors import empty_data_error
+from utils import games, get_all_critters, get_filtered_critters
 
 
 app = Flask(__name__)

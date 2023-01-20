@@ -2,10 +2,9 @@ from calendar import month_name
 from collections import defaultdict
 from datetime import datetime
 from typing import Union
-from src.scraper.database import CritterDatabase
-from src.scraper.utils import db_path
+from database import CritterDatabase
 
-db = CritterDatabase(db_path)
+db = CritterDatabase("data/critters.db")
 
 games = [
     "animalcrossing",
