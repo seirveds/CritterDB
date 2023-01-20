@@ -85,7 +85,7 @@
       <!-- Content -->
       <b-row class="mt-3 mb-3">
         <b-col>
-          <b-spinner v-if="loading"/>
+          <b-spinner style="margin-top: 30vh" v-if="loading"/>
           <div v-else>
             <FishSection :fish="critters.fish"/>
             <BugSection :bugs="critters.bug"/>
