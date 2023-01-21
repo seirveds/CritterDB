@@ -13,12 +13,13 @@ import {
   faFish,
   faSpider,
   faPersonSwimming,
+  faLandmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import App from './App.vue';
 import router from './router';
 
-library.add(faFish, faSpider, faPersonSwimming, faGithub);
+library.add(faFish, faSpider, faPersonSwimming, faGithub, faLandmark);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;

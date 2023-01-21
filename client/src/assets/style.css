@@ -18,8 +18,13 @@
   background-color: #66a6ff;
 }
 
+.crittercard-body {
+  padding: 0 1.25rem 1.25rem 1.25rem !important;
+}
+
+/* Padding 0 here to prevent footer from not touching sides of card */
 .crittercard .card-body {
-  padding-top: 0;
+  padding: 0;
 }
 
 .crittercard .card-body img {
@@ -118,6 +123,13 @@
 
 .invisible {
   display: none;
+}
+
+.icon-button {
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #2c3e50 !important;
 }
 
 .image-button {

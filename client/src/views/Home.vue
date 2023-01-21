@@ -175,12 +175,10 @@ export default {
           // eslint-disable-next-line
           console.error(error);
         });
-      // Hacky solution, just wait 1 second before showing content again
-      // Fails if data takes more than 1 second to render
-      // TODO wait until child emits 'loading done' flag or smthing
+      // Somehow a short timeout makes it so spinner disappears when data is rendered
       setTimeout(() => {
         this.loading = false;
-      }, 1000);
+      }, 100);
     },
     updateGameData(game) {
       // Called when user selects game in header dropdown

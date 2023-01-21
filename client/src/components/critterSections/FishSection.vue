@@ -46,6 +46,7 @@
           :months_available="f.months_available"
           :time_available="f.time_available"
           :image="f.b64_img"
+          :game_name="$parent.game_name"
         />
       </b-card-group>
     </b-collapse>

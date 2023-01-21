@@ -24,8 +24,11 @@
     - ~~dockerize client~~
     - New Leaf tortimer island flag
     - User preferences storage
-        - Mark as caught
+        - ~~Mark as caught~~
             - Filter on caught y/n
         - Northern/southern hemisphere
-    - Hide loading spinner on finish rendering instead of fixed time
+    - ~~Hide loading spinner on finish rendering instead of fixed time~~
+- General
+    - Add README
+        - Install steps
     
