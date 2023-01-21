@@ -31,6 +31,7 @@
           :months_available="sc.months_available"
           :time_available="sc.time_available"
           :image="sc.b64_img"
+          :game_name="$parent.game_name"
         />
       </b-card-group>
     </b-collapse>

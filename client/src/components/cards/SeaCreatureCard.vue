@@ -55,6 +55,7 @@ export default {
     'selling_price',
     'months_available',
     'time_available',
+    'game_name',
   ],
   components: {
     Availability,

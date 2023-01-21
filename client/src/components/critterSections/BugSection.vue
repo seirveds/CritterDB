@@ -43,6 +43,7 @@
           :months_available="bug.months_available"
           :time_available="bug.time_available"
           :image="bug.b64_img"
+          :game_name="$parent.game_name"
         />
       </b-card-group>
     </b-collapse>
