@@ -1,24 +1,31 @@
-- App:
-    - ~~route per spel~~
-    - ~~Groeperen op type~~
-    - maand/tijd als argument
-    - lobster dubbel in sea creatures
-- Scraper:
-    - Halve maand beschikbaar (mitten crab, moonlight jelly)
-    - (fish) bij Anchovy
+- Server:
+    - ~~route per game~~
+    - ~~group output on type~~
+    - ~~month as argument~~
+    - ~~doubles in sea creatures~~
+    - ~~dockerize server~~
+- Scraper/data:
+    - Half month availability (mitten crab, moonlight jelly)
+    - ~~(fish) in some fish names~~
 - Client:
-    - ~~dropdown header reset na click~~
-    - zoek optie
+    - ~~fix dropdown header resetting after click~~
+    - free format text search
     - ~~all / available switch~~
-    - filters
-    - styling voor tijd/maand beschikbaar
-    - card styling
-        - icons ipv text (font awesome fish)
-        - ~~header template (card docs)~~
-        - ~~card columns -> card rows (slicing groepjes van 3)~~
-            - alle rijen even hoog houden
-    - ~~collapsible~~
-    - kleur van header/achtergrond verandert obv seizoen
+    - ~~month filter~~
+    - ~~location filter icons per section~~
+    - ~~sorting option~~
+    - ~~styling for time/month availability beschikbaar~~
+    - ~~card styling~~
+        - ~~Possible header styling using header tempalte~~
+        - ~~Card order left to right instead of up to down per column~~
+        - ~~All rows same height~~
+    - ~~collapsible sections~~
     - 404 handling
-    - filter icons per sectie
-    - kloppende volgorde na sectie filter
+    - ~~dockerize client~~
+    - New Leaf tortimer island flag
+    - User preferences storage
+        - Mark as caught
+            - Filter on caught y/n
+        - Northern/southern hemisphere
+    - Hide loading spinner on finish rendering instead of fixed time
+    
