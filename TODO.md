@@ -25,8 +25,9 @@
     - New Leaf tortimer island flag
     - User preferences storage
         - ~~Mark as caught~~
-            - Filter on caught y/n
+            - ~~Filter on caught y/n~~
         - Northern/southern hemisphere
+        - ~~Ability to clear local storage~~
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
 - General
     - Add README

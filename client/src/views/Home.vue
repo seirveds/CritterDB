@@ -17,7 +17,7 @@
       </b-row>
       <b-row>
         <b-col class="text-left">
-          <b-collapse id="filter-collapse">
+          <b-collapse id="filter-collapse" visible>
             <b-card>
               <!-- All/available filter -->
               <b-row class="mb-1">
@@ -27,7 +27,6 @@
                 <b-col lg="10" sm="12">
                   <b-form-group>
                     <b-form-radio-group
-                      id="show-filter"
                       v-model="filters.month_selected"
                       @change="getData"
                     >
@@ -52,17 +51,6 @@
                   </b-form-select>
                 </b-col>
               </b-row>
-              <!-- Time filter -->
-              <!-- <b-row>
-                <p class="mr-2"><b>Time:</b></p>
-                <b-form-select
-                  v-model="filters.time_selected"
-                  @change="getData"
-                  class="w-25 pt-0 pb-0"
-                  :options="filters.time_options"
-                >
-                </b-form-select>
-              </b-row> -->
               <!-- Sort by -->
               <b-row class="mb-1">
                 <b-col xl="1" lg="2" sm="3">
@@ -78,6 +66,20 @@
                   </b-form-select>
                 </b-col>
               </b-row>
+              <!-- Hide caught -->
+              <b-row class="mb-1">
+                <b-col xl="1" lg="2" sm="3">
+                  <p class="mb-0"><b>Caught:</b></p>
+                </b-col>
+                <b-col lg="10" sm="12">
+                  <b-form-checkbox
+                    id="show-caught-filter"
+                    v-model="filters.show_caught"
+                    size="lg"
+                    switch
+                  />
+                </b-col>
+              </b-row>
             </b-card>
           </b-collapse>
         </b-col>
@@ -87,10 +89,10 @@
         <b-col>
           <b-spinner style="margin-top: 30vh" v-if="loading"/>
           <div v-else>
-            <FishSection :fish="critters.fish"/>
-            <BugSection :bugs="critters.bug"/>
+            <FishSection :fish="filteredArray(critters.fish)"/>
+            <BugSection :bugs="filteredArray(critters.bug)"/>
             <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
-              <SeaCreatureSection :seacreatures="critters.sea_creature"/>
+              <SeaCreatureSection :seacreatures="filteredArray(critters.sea_creature)"/>
             </div>
           </div>
         </b-col>
@@ -130,7 +132,7 @@ export default {
       game_name: 'newhorizons', // default game selected
       col_count: null, // set in mounted()
       new_col_count: null, // set in mounted()
-      filter_visible: false,
+      filter_visible: true,
       filters: {
         month_selected: 'now', // default value availability filter, can also be month
         // time_selected: 'now',
@@ -154,10 +156,8 @@ export default {
           { value: 'november', text: 'November' },
           { value: 'december', text: 'December' },
         ],
-        // time_options: [{ value: 'now', text: 'Now' }].concat(
-        //   _.range(24).map((i) => ({ value: i, text: `${String(i).padStart(2, '0')}:00` }))
-        // ),
         sort_selection: 'num', // default value sort dropdown
+        show_caught: true,
       },
     };
   },
@@ -195,6 +195,17 @@ export default {
       this.critters.fish = this.reorderArray(this.critters.fish);
       this.critters.bug = this.reorderArray(this.critters.bug);
       this.critters.sea_creature = this.reorderArray(this.critters.sea_creature);
+    },
+    filteredArray(arr) {
+      // Filters out caught critters when Show caught filter is false.
+      // Use this method while passing arrays to critter section components
+      // to prevent calling api when caught filter changes.
+      if (this.filters.show_caught) {
+        return arr;
+      }
+      // Not very clean; replicate sortAndReorderData functionality
+      const filteredArr = arr.filter((c) => !localStorage[`${this.game_name}_${c.name.replace(' ', '_').toLowerCase()}`]);
+      return this.reorderArray(this.sortArray(filteredArr));
     },
     sortArray(arr) {
       return _.sortBy(arr, this.filters.sort_selection);
