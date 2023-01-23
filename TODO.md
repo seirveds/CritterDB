@@ -29,6 +29,7 @@
         - Northern/southern hemisphere
         - ~~Ability to clear local storage~~
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
+    - Last month to catch
 - General
     - Add README
         - Install steps

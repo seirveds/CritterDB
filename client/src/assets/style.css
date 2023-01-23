@@ -148,3 +148,11 @@
   height: 2.5em;
   border-radius: 5px;
 }
+
+.tortimer-island-icon {
+  width: 25px !important;
+  height: 25px !important;
+  position: absolute;
+  top: 15%;
+  left: 85%;
+}

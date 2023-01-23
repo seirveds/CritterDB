@@ -44,6 +44,8 @@
           :time_available="bug.time_available"
           :image="bug.b64_img"
           :game_name="$parent.game_name"
+          :tortimer_island="bug.tortimer_island"
+          :tortimer_island_exclusive="bug.tortimer_island_exclusive"
         />
       </b-card-group>
     </b-collapse>

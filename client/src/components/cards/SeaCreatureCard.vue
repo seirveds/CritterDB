@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import Availability from './Availability.vue';
-import CaughtFooter from './CaughtFooter.vue';
+import Availability from '../cardComponents/Availability.vue';
+import CaughtFooter from '../cardComponents/CaughtFooter.vue';
 
 export default {
   props: [

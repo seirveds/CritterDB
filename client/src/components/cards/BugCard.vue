@@ -4,6 +4,11 @@
       <h4 class="mb-0">{{ name }}</h4>
     </template>
     <b-card-body class="crittercard-body">
+      <TortimerIslandFlag
+        :game_name="game_name"
+        :tortimerIslandExclusive="tortimer_island_exclusive"
+        :tortimerIslandAvailable="tortimer_island"
+      />
       <img v-bind:src="`data:image/png;base64, ${image}`"/>
       <b-row class="crittercard-row">
         <b-col class="crittercard-l-col" cols=4>
@@ -34,8 +39,9 @@
 </template>
 
 <script>
-import Availability from './Availability.vue';
-import CaughtFooter from './CaughtFooter.vue';
+import Availability from '../cardComponents/Availability.vue';
+import CaughtFooter from '../cardComponents/CaughtFooter.vue';
+import TortimerIslandFlag from '../cardComponents/TortimerIslandFlag.vue';
 
 export default {
   props: [
@@ -47,10 +53,13 @@ export default {
     'months_available',
     'time_available',
     'game_name',
+    'tortimer_island',
+    'tortimer_island_exclusive',
   ],
   components: {
     Availability,
     CaughtFooter,
+    TortimerIslandFlag,
   },
 };
 </script>
