@@ -3,12 +3,18 @@
   /* display: inline-block; */
 }
 
+.crittercard > .card-header {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .crittercard.fish > header {
   background-color: #66ccff;
 }
 
-.crittercard.bug {
-  min-height: 400px;
+.crittercard.bug > .card-body > .crittercard-body {
+  min-height: 330px;
+  padding-bottom: 0 !important;
 }
 .crittercard.bug > header {
   background-color: #caed78;
@@ -31,6 +37,10 @@
   width: 128px;
   height: 128px;
   image-rendering: pixelated;
+}
+
+.card-footer {
+  margin-bottom: 0;
 }
 
 .critter-section-count {
@@ -153,6 +163,6 @@
   width: 25px !important;
   height: 25px !important;
   position: absolute;
-  top: 15%;
+  bottom: 78%;
   left: 85%;
 }

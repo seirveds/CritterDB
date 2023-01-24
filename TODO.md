@@ -6,6 +6,7 @@
     - ~~dockerize server~~
 - Scraper/data:
     - Half month availability (mitten crab, moonlight jelly)
+    - Tortimer island availability fish/sea creatures
     - ~~(fish) in some fish names~~
 - Client:
     - ~~fix dropdown header resetting after click~~
@@ -22,7 +23,7 @@
     - ~~collapsible sections~~
     - 404 handling
     - ~~dockerize client~~
-    - New Leaf tortimer island flag
+    - ~~New Leaf tortimer island flag~~
     - User preferences storage
         - ~~Mark as caught~~
             - ~~Filter on caught y/n~~

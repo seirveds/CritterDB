@@ -1,10 +1,9 @@
 <template>
   <b-img
-    :src="require(`${getIcon}`)"
-    :class="getClass"
-    class="tortimer-island-icon"
+    :src="icon"
+    :class="imgClass"
     v-b-tooltip.hover
-    title="Tortimer island exclusive"
+    :title="tooltip"
   />
 </template>
 
@@ -16,25 +15,33 @@ export default {
     'game_name',
   ],
   computed: {
-    getIcon() {
-      const baseUrl = '@/assets/icons/';
+    icon() {
       if (this.tortimerIslandExclusive) {
-        return baseUrl + 'tortimer-island-exclusive.png';  // eslint-disable-line
+        return require('@/assets/icons/tortimer-island-exclusive.png');  // eslint-disable-line
       }
       if (this.tortimerIslandAvailable) {
-        return baseUrl + 'tortimer-island-available.png';  // eslint-disable-line
+        return require('@/assets/icons/tortimer-island-available.png');  // eslint-disable-line
       }
       return '';
     },
-    getClass() {
+    imgClass() {
+      // Always return atleast baseClass string
+      const baseClass = 'tortimer-island-icon';
+      // Hide icon when game is not new leaf or bug doesn not appear on tortimer island
       if (this.game_name !== 'newleaf' || (!this.tortimerIslandAvailable && !this.tortimerIslandExclusive)) {
-        return 'invisible';
+        return `${baseClass} invisible`;
+      }
+      return baseClass;
+    },
+    tooltip() {
+      if (this.tortimerIslandExclusive) {
+        return 'Tortimer Island exclusive';
+      }
+      if (this.tortimerIslandAvailable) {
+        return 'Tortimer Island year-round';
       }
       return '';
     },
-  },
-  created() {
-    console.log(this.$parent.name, this.game_name, this.tortimerIslandAvailable, this.tortimerIslandExclusive);  // eslint-disable-line
   },
 };
 </script>

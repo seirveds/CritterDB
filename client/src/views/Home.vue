@@ -87,7 +87,7 @@
       <!-- Content -->
       <b-row class="mt-3 mb-3">
         <b-col>
-          <b-spinner style="margin-top: 30vh" v-if="loading"/>
+          <b-spinner style="margin-top: 20vh" v-if="loading"/>
           <div v-else>
             <FishSection :fish="filteredArray(critters.fish)"/>
             <BugSection :bugs="filteredArray(critters.bug)"/>
@@ -178,7 +178,7 @@ export default {
       // Somehow a short timeout makes it so spinner disappears when data is rendered
       setTimeout(() => {
         this.loading = false;
-      }, 100);
+      }, 800);
     },
     updateGameData(game) {
       // Called when user selects game in header dropdown

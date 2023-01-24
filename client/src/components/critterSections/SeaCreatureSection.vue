@@ -32,6 +32,8 @@
           :time_available="sc.time_available"
           :image="sc.b64_img"
           :game_name="$parent.game_name"
+          :tortimer_island="sc.tortimer_island"
+          :tortimer_island_exclusive="sc.tortimer_island_exclusive"
         />
       </b-card-group>
     </b-collapse>
