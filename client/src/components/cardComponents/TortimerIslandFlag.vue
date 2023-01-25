@@ -16,6 +16,7 @@ export default {
   ],
   computed: {
     icon() {
+      // Check exclusive first, when critters have both flags this is the more important one
       if (this.tortimerIslandExclusive) {
         return require('@/assets/icons/tortimer-island-exclusive.png');  // eslint-disable-line
       }
@@ -34,6 +35,7 @@ export default {
       return baseClass;
     },
     tooltip() {
+      // Check exclusive first, when critters have both flags this is the more important one
       if (this.tortimerIslandExclusive) {
         return 'Tortimer Island exclusive';
       }
