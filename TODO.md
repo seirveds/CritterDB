@@ -10,6 +10,7 @@
     - ~~(fish) in some fish names~~
 - Client:
     - ~~fix dropdown header resetting after click~~
+    - fix dropdown header resetting after page navigation
     - free format text search
     - ~~all / available switch~~
     - ~~month filter~~
