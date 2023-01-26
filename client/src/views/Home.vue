@@ -164,7 +164,7 @@ export default {
   methods: {
     getData() {
       this.loading = true;
-      this.$http.get(`${this.$server}/${this.game_name}/${this.calculateMonth()}`)
+      this.$http.get(`${this.$server}/${this.game_name}/${this.filters.month_selected}${this.hemisphereString()}`)
         .then((res) => {
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
@@ -185,31 +185,11 @@ export default {
       this.game_name = game;
       this.getData();
     },
-    calculateMonth() {
-      // Returns name of month based on month selection and selected hemisphere (new horizons only)
-      if (localStorage.hemisphere === 'n' || this.game_name !== 'newhorizons') {
-        return this.filters.month_selected;
+    hemisphereString() {
+      if (this.game_name === 'newhorizons') {
+        return `/${localStorage.hemisphere}`;
       }
-      // Need month number to do calculate month in southern hemisphere
-      let m = null;
-      if (this.filters.month_selected === 'now') {
-        const d = new Date();
-        m = d.getMonth() + 1;
-      } else {
-        // Month string to month number
-        // eslint-disable-next-line
-        m = this.filters.month_options.filter((d) => d.value === this.filters.month_selected)[0].num;
-      }
-      // Transform northern hemisphere month to southern hemisphere (shift 6 months)
-      if (m === 6) {
-        m = 12;
-      } else {
-        m = (m + 6) % 12;
-      }
-
-      // Return month number as string
-      // - 1 as we start indexing months at 1 and not 0
-      return this.filters.month_options[m - 1].value;
+      return '';
     },
     sortAndReorderData() {
       // Sorts data based on field selected in filter sort section

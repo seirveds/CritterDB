@@ -24,12 +24,11 @@
     - 404 handling
     - ~~dockerize client~~
     - ~~New Leaf tortimer island flag~~
-    - User preferences storage
+    - ~~User preferences storage~~
         - ~~Mark as caught~~
             - ~~Filter on caught y/n~~
-        - Northern/southern hemisphere
-            - ~~Api call with correct month~~
-            - Update AvailabilityFooter
+        - ~~Northern/southern hemisphere~~
+            - ~~Update api to include hemisphere argument~~
         - ~~Ability to clear local storage~~
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
     - Last month to catch

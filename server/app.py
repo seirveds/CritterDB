@@ -11,20 +11,24 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 @app.route("/<game>/all", methods=["GET"])
-def all(game: str) -> Response:
+@app.route("/<game>/all/<hemisphere>", methods=["GET"])
+def all(game: str, hemisphere: str = 'n') -> Response:
     """Return all critters for passed game."""
     assert game in games
-    if res := get_all_critters(game):
+    assert hemisphere in ['n', 's']
+    if res := get_all_critters(game, hemisphere):
         return make_response(res, 200)
     return make_response(empty_data_error, 500)
 
 
 @app.route("/<game>/<month>", methods=["GET"])
-def month_available(game: str, month: str) -> Response:
+@app.route("/<game>/<month>/<hemisphere>", methods=["GET"])
+def month_available(game: str, month: str, hemisphere: str = 'n') -> Response:
     """Return all critters available in passed month and hour for passed game."""
     assert game in games
     assert month == 'now' or month in [m.lower() for m in month_name][1:]
+    assert hemisphere in ['n', 's']
 
-    if res := get_filtered_critters(game=game, month=month):
+    if res := get_filtered_critters(game=game, month=month, hemisphere=hemisphere):
         return make_response(res, 200)
     return make_response(empty_data_error, 500)

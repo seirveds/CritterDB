@@ -47,6 +47,20 @@ def group_query_result(res: list[dict]) -> dict:
     return grouped
 
 
+def shift_month(m: int) -> int:
+    """Shift month number from northern to southern hemisphere value."""
+    if m == 6:
+        return 12
+    return (m + 6) % 12
+
+def shift_month_availabilities(res: list[dict]) -> list[dict]:
+    """ Update query result month availability to southern hemisphere"""
+    # Doesn't scale very nicely :/
+    for row in res:
+        row["months_available"] = [shift_month(m) for m in row["months_available"]]
+    return res
+
+
 def select_time_availability(res: list[dict], m: Union[int, None] = None) -> list[dict]:
     """
     Select available time for passed month from time_available entry.
@@ -67,17 +81,20 @@ def select_time_availability(res: list[dict], m: Union[int, None] = None) -> lis
     return res
 
 
-def get_all_critters(game: str) -> dict:
+def get_all_critters(game: str, hemisphere: str) -> dict:
     """Return all critters for passed game grouped by type."""
     res = db.query(all_query.format(game=game))
     # Get time_available for current month if possible, otherwise
     # get time from a random month
     res = select_time_availability(res)
+    if game == "newhorizons" and hemisphere == "s":
+        res = shift_month_availabilities(res)
     return group_query_result(res)
 
 
-def get_filtered_critters(game: str, month: str) -> dict:
+def get_filtered_critters(game: str, month: str, hemisphere: str) -> dict:
     """Return critters available for passed month and hour in passed game grouped by type."""
+    southern_hemisphere = (game == "newhorizons") and (hemisphere == "s")
     # If passed month is 'now' use current month
     if month == 'now':
         m, h = get_month_and_hour()
@@ -85,9 +102,15 @@ def get_filtered_critters(game: str, month: str) -> dict:
     else:
         m = [mth.lower() for mth in month_name].index(month)
         h = "'%'"  # Dont look at time
-        
+
+    # Shift 6 months for southern hemisphere
+    if southern_hemisphere:
+        m = shift_month(m)
 
     res = db.query(available_now_query.format(m=m, h=h, game=game))
     # Month chosen for time availability is passed month
     res = select_time_availability(res, m)
+
+    if southern_hemisphere:
+        res = shift_month_availabilities(res)
     return group_query_result(res)

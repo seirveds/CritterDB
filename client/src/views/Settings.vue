@@ -78,6 +78,9 @@ export default {
   methods: {
     clearLocalStorage() {
       localStorage.clear();
+      // Make sure localstorage always filled with atleast 1 value, otherwise
+      // methods in Home.vue won't work.
+      this.setHemisphere();
     },
     setHemisphere() {
       localStorage.hemisphere = this.hemisphere;
