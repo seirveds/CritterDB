@@ -6,7 +6,7 @@
     - ~~dockerize server~~
 - Scraper/data:
     - Half month availability (mitten crab, moonlight jelly)
-    - Tortimer island availability fish/sea creatures
+    - ~~Tortimer island availability fish/sea creatures~~
     - ~~(fish) in some fish names~~
 - Client:
     - ~~fix dropdown header resetting after click~~
@@ -28,6 +28,8 @@
         - ~~Mark as caught~~
             - ~~Filter on caught y/n~~
         - Northern/southern hemisphere
+            - ~~Api call with correct month~~
+            - Update AvailabilityFooter
         - ~~Ability to clear local storage~~
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
     - Last month to catch

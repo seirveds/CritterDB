@@ -143,18 +143,18 @@ export default {
           { value: 'selling_price', text: 'Price' },
         ],
         month_options: [ // Months dropdown
-          { value: 'january', text: 'January' },
-          { value: 'february', text: 'February' },
-          { value: 'march', text: 'March' },
-          { value: 'april', text: 'April' },
-          { value: 'may', text: 'May' },
-          { value: 'june', text: 'June' },
-          { value: 'july', text: 'July' },
-          { value: 'august', text: 'August' },
-          { value: 'september', text: 'September' },
-          { value: 'october', text: 'October' },
-          { value: 'november', text: 'November' },
-          { value: 'december', text: 'December' },
+          { value: 'january', text: 'January', num: 1 },
+          { value: 'february', text: 'February', num: 2 },
+          { value: 'march', text: 'March', num: 3 },
+          { value: 'april', text: 'April', num: 4 },
+          { value: 'may', text: 'May', num: 5 },
+          { value: 'june', text: 'June', num: 6 },
+          { value: 'july', text: 'July', num: 7 },
+          { value: 'august', text: 'August', num: 8 },
+          { value: 'september', text: 'September', num: 9 },
+          { value: 'october', text: 'October', num: 10 },
+          { value: 'november', text: 'November', num: 11 },
+          { value: 'december', text: 'December', num: 12 },
         ],
         sort_selection: 'num', // default value sort dropdown
         show_caught: true,
@@ -164,7 +164,7 @@ export default {
   methods: {
     getData() {
       this.loading = true;
-      this.$http.get(`${this.$server}/${this.game_name}/${this.filters.month_selected}`)
+      this.$http.get(`${this.$server}/${this.game_name}/${this.calculateMonth()}`)
         .then((res) => {
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
@@ -184,6 +184,32 @@ export default {
       // Called when user selects game in header dropdown
       this.game_name = game;
       this.getData();
+    },
+    calculateMonth() {
+      // Returns name of month based on month selection and selected hemisphere (new horizons only)
+      if (localStorage.hemisphere === 'n' || this.game_name !== 'newhorizons') {
+        return this.filters.month_selected;
+      }
+      // Need month number to do calculate month in southern hemisphere
+      let m = null;
+      if (this.filters.month_selected === 'now') {
+        const d = new Date();
+        m = d.getMonth() + 1;
+      } else {
+        // Month string to month number
+        // eslint-disable-next-line
+        m = this.filters.month_options.filter((d) => d.value === this.filters.month_selected)[0].num;
+      }
+      // Transform northern hemisphere month to southern hemisphere (shift 6 months)
+      if (m === 6) {
+        m = 12;
+      } else {
+        m = (m + 6) % 12;
+      }
+
+      // Return month number as string
+      // - 1 as we start indexing months at 1 and not 0
+      return this.filters.month_options[m - 1].value;
     },
     sortAndReorderData() {
       // Sorts data based on field selected in filter sort section
