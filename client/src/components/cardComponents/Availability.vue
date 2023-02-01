@@ -1,7 +1,14 @@
 <template>
   <div>
     <b-row class="crittercard-row">
-      <p class="mb-0"><b>Months available: </b></p>
+      <b-col class="crittercard-l-col" cols=10>
+        <p class="mb-0"><b>Months available: </b></p>
+      </b-col>
+      <b-col cols="2" class="ml-0 pr-0">
+        <p class="mb-0" v-b-tooltip.hover title="Last month">
+          <b-icon :icon="lastMonthIcon" style="color: #ff6666"/>
+        </p>
+      </b-col>
     </b-row>
     <b-row class="crittercard-row month-row">
       <p v-for="m in months"
@@ -122,6 +129,14 @@ export default {
       }
       // Slice to remove trailing semicolon and space
       return outString.slice(0, -2);
+    },
+    lastMonthIcon() {
+      const d = new Date();
+      const nextMonth = d.getMonth() + 1 + 1;
+      if (!this.months_available.includes(nextMonth)) {
+        return 'exclamation-square-fill';
+      }
+      return '';
     },
   },
 };

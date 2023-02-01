@@ -33,6 +33,8 @@
         - ~~Ability to clear local storage~~
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
     - Last month to catch
+        - ~~indicator~~
+        - filter
 - General
     - Add README
         - Install steps
