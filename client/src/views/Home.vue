@@ -89,10 +89,19 @@
         <b-col>
           <b-spinner style="margin-top: 20vh" v-if="loading"/>
           <div v-else>
-            <FishSection :fish="filteredArray(critters.fish)"/>
-            <BugSection :bugs="filteredArray(critters.bug)"/>
+            <FishSection
+              :fish="filteredArray(critters.fish)"
+              :month_selected="filters.month_selected"
+            />
+            <BugSection
+              :bugs="filteredArray(critters.bug)"
+              :month_selected="filters.month_selected"
+            />
             <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
-              <SeaCreatureSection :seacreatures="filteredArray(critters.sea_creature)"/>
+              <SeaCreatureSection
+                :seacreatures="filteredArray(critters.sea_creature)"
+                :month_selected="filters.month_selected"
+              />
             </div>
           </div>
         </b-col>

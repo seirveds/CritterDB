@@ -37,6 +37,7 @@
       <Availability
         :time_available="time_available"
         :months_available="months_available"
+        :month_selected="month_selected"
       />
     </b-card-body>
     <CaughtFooter
@@ -64,6 +65,7 @@ export default {
     'game_name',
     'tortimer_island_exclusive',
     'tortimer_island',
+    'month_selected',
   ],
   components: {
     Availability,

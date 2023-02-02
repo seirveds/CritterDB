@@ -6,7 +6,7 @@
       </b-col>
       <b-col cols="2" class="ml-0 pr-0">
         <p class="mb-0" v-b-tooltip.hover title="Last month">
-          <b-icon :icon="lastMonthIcon" style="color: #ff6666"/>
+          <b-icon :icon="lastMonthIcon" style="color: #ff9966"/>
         </p>
       </b-col>
     </b-row>
@@ -35,36 +35,44 @@ export default {
   props: [
     'time_available',
     'months_available',
+    'month_selected',
   ],
   data() {
     return {
       months: [
-        { name: 'January', abbr: 'J', num: 1 },
-        { name: 'February', abbr: 'F', num: 2 },
-        { name: 'March', abbr: 'M', num: 3 },
-        { name: 'April', abbr: 'A', num: 4 },
-        { name: 'May', abbr: 'M', num: 5 },
-        { name: 'June', abbr: 'J', num: 6 },
-        { name: 'July', abbr: 'J', num: 7 },
-        { name: 'August', abbr: 'A', num: 8 },
-        { name: 'September', abbr: 'S', num: 9 },
-        { name: 'October', abbr: 'O', num: 10 },
-        { name: 'November', abbr: 'N', num: 11 },
-        { name: 'December', abbr: 'D', num: 12 },
+        { name: 'january', abbr: 'J', num: 1 },
+        { name: 'february', abbr: 'F', num: 2 },
+        { name: 'march', abbr: 'M', num: 3 },
+        { name: 'april', abbr: 'A', num: 4 },
+        { name: 'may', abbr: 'M', num: 5 },
+        { name: 'june', abbr: 'J', num: 6 },
+        { name: 'july', abbr: 'J', num: 7 },
+        { name: 'august', abbr: 'A', num: 8 },
+        { name: 'september', abbr: 'S', num: 9 },
+        { name: 'october', abbr: 'O', num: 10 },
+        { name: 'november', abbr: 'N', num: 11 },
+        { name: 'december', abbr: 'D', num: 12 },
       ],
     };
   },
   methods: {
+    getMonthNo() {
+      let monthNo = null;
+      if (this.month_selected === 'all' || this.month_selected === 'now') {
+        const d = new Date();
+        monthNo = d.getMonth() + 1;
+      } else {
+        monthNo = this.months.filter((d) => d.name === this.month_selected)[0].num;
+      }
+      return monthNo;
+    },
     styleMonthAbbr(m) {
-      const d = new Date();
-      const monthNo = d.getMonth() + 1;
-
       let out = '';
       if (this.months_available.includes(m.num)) {
         out += 'available-month ';
       }
 
-      if (m.num === monthNo) {
+      if (m.num === this.getMonthNo()) {
         out += 'active-month ';
       }
 
@@ -131,8 +139,14 @@ export default {
       return outString.slice(0, -2);
     },
     lastMonthIcon() {
-      const d = new Date();
-      const nextMonth = d.getMonth() + 1 + 1;
+      const monthNo = this.getMonthNo();
+
+      let nextMonth = monthNo + 1;
+
+      if (nextMonth === 13) {
+        nextMonth = 1;
+      }
+
       if (!this.months_available.includes(nextMonth)) {
         return 'exclamation-square-fill';
       }

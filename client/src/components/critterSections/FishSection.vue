@@ -49,6 +49,7 @@
           :game_name="$parent.game_name"
           :tortimer_island="f.tortimer_island"
           :tortimer_island_exclusive="f.tortimer_island_exclusive"
+          :month_selected="month_selected"
         />
       </b-card-group>
     </b-collapse>
@@ -59,7 +60,7 @@
 import FishCard from '../cards/FishCard.vue';
 
 export default {
-  props: ['fish'],
+  props: ['fish', 'month_selected'],
   components: {
     FishCard,
   },

@@ -46,6 +46,7 @@
           :game_name="$parent.game_name"
           :tortimer_island="bug.tortimer_island"
           :tortimer_island_exclusive="bug.tortimer_island_exclusive"
+          :month_selected="month_selected"
         />
       </b-card-group>
     </b-collapse>
@@ -56,7 +57,7 @@
 import BugCard from '../cards/BugCard.vue';
 
 export default {
-  props: ['bugs'],
+  props: ['bugs', 'month_selected'],
   components: {
     BugCard,
   },

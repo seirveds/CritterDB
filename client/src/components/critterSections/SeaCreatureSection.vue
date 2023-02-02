@@ -34,6 +34,7 @@
           :game_name="$parent.game_name"
           :tortimer_island="sc.tortimer_island"
           :tortimer_island_exclusive="sc.tortimer_island_exclusive"
+          :month_selected="month_selected"
         />
       </b-card-group>
     </b-collapse>
@@ -44,7 +45,7 @@
 import SeaCreatureCard from '../cards/SeaCreatureCard.vue';
 
 export default {
-  props: ['seacreatures'],
+  props: ['seacreatures', 'month_selected'],
   components: {
     SeaCreatureCard,
   },
