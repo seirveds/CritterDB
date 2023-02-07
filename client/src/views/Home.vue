@@ -187,7 +187,6 @@ export default {
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
           this.critters.sea_creature = res.data.sea_creature;
-          // this.sortAndReorderData();
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -221,6 +220,9 @@ export default {
       this.critters.sea_creature = this.reorderArray(this.critters.sea_creature);
     },
     filteredArray(arr) {
+      if (arr === undefined) {
+        return [];
+      }
       let out = arr;
 
       // Filter out caught critters when Show caught filter is false.
@@ -244,6 +246,7 @@ export default {
       return out;
     },
     sortArray(arr) {
+      console.log(arr);
       // Strange behaviour empties array when length is one, handle this here
       if (arr.length === 1) {
         return arr;
