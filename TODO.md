@@ -11,7 +11,6 @@
 - Client:
     - ~~fix dropdown header resetting after click~~
     - fix dropdown header resetting after page navigation
-    - free format text search
     - ~~all / available switch~~
     - ~~month filter~~
     - ~~location filter icons per section~~
@@ -34,7 +33,7 @@
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
     - Last month to catch
         - ~~indicator~~
-        - filter
+        - ~~filter~~
 - General
     - Add README
         - Install steps
