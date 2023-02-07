@@ -51,6 +51,7 @@
                   </b-form-select>
                 </b-col>
               </b-row>
+              <hr/>
               <!-- Sort by -->
               <b-row class="mb-1">
                 <b-col xl="1" lg="2" sm="3">
@@ -66,19 +67,26 @@
                   </b-form-select>
                 </b-col>
               </b-row>
-              <!-- Hide caught -->
-              <b-row class="mb-1">
-                <b-col xl="1" lg="2" sm="3">
-                  <p class="mb-0"><b>Caught:</b></p>
-                </b-col>
-                <b-col lg="10" sm="12">
-                  <b-form-checkbox
-                    id="show-caught-filter"
-                    v-model="filters.show_caught"
-                    size="lg"
-                    switch
-                  />
-                </b-col>
+              <hr/>
+              <!-- Show caught -->
+              <b-row class="mb-1 pl-3">
+                <p class="mb-0 mr-3"><b>Show caught:</b></p>
+                <b-form-checkbox
+                  id="show-caught-filter"
+                  v-model="filters.show_caught"
+                  size="lg"
+                  switch
+                />
+              </b-row>
+              <!-- Last month available-->
+              <b-row class="mb-1 pl-3">
+                <p class="mb-0 mr-3"><b>Last month only:</b></p>
+                <b-form-checkbox
+                  id="show-last-month-available-filter"
+                  v-model="filters.last_month_only"
+                  size="lg"
+                  switch
+                />
               </b-row>
             </b-card>
           </b-collapse>
@@ -167,6 +175,7 @@ export default {
         ],
         sort_selection: 'num', // default value sort dropdown
         show_caught: true,
+        last_month_only: false,
       },
     };
   },
@@ -178,7 +187,7 @@ export default {
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
           this.critters.sea_creature = res.data.sea_creature;
-          this.sortAndReorderData();
+          // this.sortAndReorderData();
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -212,20 +221,40 @@ export default {
       this.critters.sea_creature = this.reorderArray(this.critters.sea_creature);
     },
     filteredArray(arr) {
-      // Filters out caught critters when Show caught filter is false.
-      // Use this method while passing arrays to critter section components
-      // to prevent calling api when caught filter changes.
-      if (this.filters.show_caught) {
-        return arr;
+      let out = arr;
+
+      // Filter out caught critters when Show caught filter is false.
+      if (!this.filters.show_caught) {
+        out = out.filter((c) => !localStorage[`${this.game_name}_${c.name.replace(' ', '_').toLowerCase()}`]);
       }
-      // Not very clean; replicate sortAndReorderData functionality
-      const filteredArr = arr.filter((c) => !localStorage[`${this.game_name}_${c.name.replace(' ', '_').toLowerCase()}`]);
-      return this.reorderArray(this.sortArray(filteredArr));
+
+      // Filter out critters available next month if last month only filter is true.
+      if (this.filters.last_month_only) {
+        const currMonth = this.getMonthNo();
+        const nextMonth = this.getNextMonthNo();
+        out = out.filter((c) => !c.months_available.includes(nextMonth) && c.months_available.includes(currMonth)); // eslint-disable-line
+      }
+
+      // Sort using selected sort filter
+      out = this.sortArray(out);
+
+      // Reorder so columns can be read left to right
+      out = this.reorderArray(out);
+
+      return out;
     },
     sortArray(arr) {
+      // Strange behaviour empties array when length is one, handle this here
+      if (arr.length === 1) {
+        return arr;
+      }
       return _.sortBy(arr, this.filters.sort_selection);
     },
     reorderArray(arr) {
+      // Handle edge case. On length 1 undefined would be added to array.
+      if (arr.length === 1) {
+        return arr;
+      }
       // Reorders array based on amount of columns of cards in card group.
       // By default the order is top to bottom from left to right column but
       // this is not intuitive. Here we shift the data in such a way the order
@@ -269,9 +298,6 @@ export default {
       }
       return out;
     },
-    filterArray(arr) {
-      return arr.map((r) => r.months_available.includes(this.month_selection));
-    },
     getFilterIcon() {
       // Change icon of top filter text to downwards caret if filter collapse
       // is closed, and upwards caret if filters are open
@@ -296,6 +322,27 @@ export default {
         return 2;
       }
       return 3;
+    },
+    getMonthNo() {
+      let monthNo = null;
+      if (this.filters.month_selected === 'all' || this.filters.month_selected === 'now') {
+        // Use current month
+        const d = new Date();
+        monthNo = d.getMonth() + 1;
+      } else {
+        monthNo = this.filters.month_options.filter((d) => d.value === this.filters.month_selected)[0].num;  // eslint-disable-line
+      }
+      return monthNo;
+    },
+    getNextMonthNo() {
+      const monthNo = this.getMonthNo();
+
+      // End of year, return January
+      if (monthNo === 12) {
+        return 1;
+      }
+      // Otherwise just month + 1
+      return monthNo + 1;
     },
   },
   created() {

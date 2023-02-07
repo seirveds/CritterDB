@@ -140,9 +140,9 @@ export default {
     },
     lastMonthIcon() {
       const monthNo = this.getMonthNo();
-
       let nextMonth = monthNo + 1;
 
+      // Wrap around to start of year
       if (nextMonth === 13) {
         nextMonth = 1;
       }
