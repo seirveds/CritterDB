@@ -204,6 +204,9 @@ export default {
     },
     hemisphereString() {
       if (this.game_name === 'newhorizons') {
+        if (!localStorage.hemisphere) {
+          localStorage.hemisphere = 'n';
+        }
         return `/${localStorage.hemisphere}`;
       }
       return '';
