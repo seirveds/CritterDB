@@ -5,12 +5,13 @@
     - ~~doubles in sea creatures~~
     - ~~dockerize server~~
 - Scraper/data:
-    - Half month availability (mitten crab, moonlight jelly)
+    - ~~Half month availability (mitten crab, moonlight jelly)~~
     - ~~Tortimer island availability fish/sea creatures~~
     - ~~(fish) in some fish names~~
 - Client:
     - ~~fix dropdown header resetting after click~~
     - fix dropdown header resetting after page navigation
+    - bug section icons
     - ~~all / available switch~~
     - ~~month filter~~
     - ~~location filter icons per section~~
@@ -34,6 +35,7 @@
     - Last month to catch
         - ~~indicator~~
         - ~~filter~~
+        - ~~Bug: last month indicator for unavailable critters~~
 - General
     - Add README
         - Install steps

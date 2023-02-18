@@ -147,7 +147,7 @@ export default {
         nextMonth = 1;
       }
 
-      if (!this.months_available.includes(nextMonth)) {
+      if (this.months_available.includes(monthNo) && !this.months_available.includes(nextMonth)) {
         return 'exclamation-square-fill';
       }
       return '';
