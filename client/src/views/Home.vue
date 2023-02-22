@@ -15,9 +15,10 @@
           </h1>
         </b-col>
       </b-row>
+      <!-- Filter collapsible -->
       <b-row>
         <b-col class="text-left">
-          <b-collapse id="filter-collapse" visible>
+          <b-collapse id="filter-collapse">
             <b-card>
               <!-- All/available filter -->
               <b-row class="mb-1">
@@ -92,25 +93,46 @@
           </b-collapse>
         </b-col>
       </b-row>
+      <b-row>
+        <div class="critter-button-wrapper">
+          <div class="critter-button ml-4" id="fish" @click="critterButtonClick">
+            <h2 class="mb-0">
+              <font-awesome-icon icon="fa-solid fa-fish"/>
+            </h2>
+          </div>
+          <div class="critter-button" id="bugs" @click="critterButtonClick">
+            <h2 class="mb-0">
+              <font-awesome-icon icon="fa-solid fa-spider"/>
+            </h2>
+          </div>
+          <div class="critter-button"
+            v-if="sea_creature_games.includes(game_name)"
+            id="seacreatures"
+            @click="critterButtonClick"
+          >
+            <h2 class="mb-0">
+              <font-awesome-icon icon="fa-solid fa-person-swimming"/>
+            </h2>
+          </div>
+        </div>
+      </b-row>
       <!-- Content -->
       <b-row class="mt-3 mb-3">
         <b-col>
           <b-spinner style="margin-top: 20vh" v-if="loading"/>
           <div v-else>
-            <FishSection
+            <FishSection v-if="filters.critter_selection === 'fish'"
               :fish="filteredArray(critters.fish)"
               :month_selected="filters.month_selected"
             />
-            <BugSection
+            <BugSection v-if="filters.critter_selection === 'bugs'"
               :bugs="filteredArray(critters.bug)"
               :month_selected="filters.month_selected"
             />
-            <div :class="{ invisible: !sea_creature_games.includes(game_name)}">
-              <SeaCreatureSection
-                :seacreatures="filteredArray(critters.sea_creature)"
-                :month_selected="filters.month_selected"
-              />
-            </div>
+            <SeaCreatureSection v-if="filters.critter_selection === 'seacreatures'"
+              :seacreatures="filteredArray(critters.sea_creature)"
+              :month_selected="filters.month_selected"
+            />
           </div>
         </b-col>
       </b-row>
@@ -149,7 +171,7 @@ export default {
       game_name: 'newhorizons', // default game selected
       col_count: null, // set in mounted()
       new_col_count: null, // set in mounted()
-      filter_visible: true,
+      filter_visible: false,
       filters: {
         month_selected: 'now', // default value availability filter, can also be month
         // time_selected: 'now',
@@ -176,6 +198,7 @@ export default {
         sort_selection: 'num', // default value sort dropdown
         show_caught: true,
         last_month_only: false,
+        critter_selection: 'fish',
       },
     };
   },
@@ -249,7 +272,6 @@ export default {
       return out;
     },
     sortArray(arr) {
-      console.log(arr);
       // Strange behaviour empties array when length is one, handle this here
       if (arr.length === 1) {
         return arr;
@@ -349,6 +371,9 @@ export default {
       }
       // Otherwise just month + 1
       return monthNo + 1;
+    },
+    critterButtonClick(event) {
+      this.filters.critter_selection = event.currentTarget.id;
     },
   },
   created() {
