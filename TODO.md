@@ -10,8 +10,8 @@
     - ~~(fish) in some fish names~~
 - Client:
     - ~~fix dropdown header resetting after click~~
-    - fix dropdown header resetting after page navigation
-    - bug section icons
+    - store navbar dropdown selection in local storage
+    - remove bug section icons
     - ~~all / available switch~~
     - ~~month filter~~
     - ~~location filter icons per section~~

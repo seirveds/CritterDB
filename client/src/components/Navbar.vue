@@ -55,7 +55,9 @@ export default {
   },
   methods: {
     navbarClick(option) {
+      // Make sure selection is highlighted in dropdown
       this.navbar.selection = option.text;
+      // Emit selection so it can be used in server call
       this.$emit('selected-game-change', option.value);
     },
   },
