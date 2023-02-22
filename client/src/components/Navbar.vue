@@ -6,7 +6,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
 
-      <b-navbar-nav>
+      <b-navbar-nav v-if="showNavDropdown">
         <b-nav-item-dropdown
           v-model="navbar.selection"
           :text="navbar.selection"
@@ -57,6 +57,15 @@ export default {
     navbarClick(option) {
       this.navbar.selection = option.text;
       this.$emit('selected-game-change', option.value);
+    },
+  },
+  computed: {
+    showNavDropdown() {
+      // No need to show dropdown on settings page as this does nothing
+      if (this.$route.name === 'Settings') {
+        return false;
+      }
+      return true;
     },
   },
 };
