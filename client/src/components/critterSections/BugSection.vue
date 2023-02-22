@@ -7,20 +7,6 @@
           Bugs <span class="critter-section-count">({{ bugs.length }})</span>
         </h2>
       </b-col>
-      <b-col class="align-right p-auto">
-        <div class="mt-3" style="float: right">
-          <b-button v-for="btn in filterButtons"
-            v-b-tooltip.hover
-            :title="btn.text"
-            :key="btn.value"
-            :pressed.sync="btn.selected"
-            class="image-button"
-            onclick="this.blur();"
-          >
-            <img :src="btn.image"/>
-          </b-button>
-        </div>
-      </b-col>
       <b-col class="align-right col-1">
         <h2 class="text-right mt-3 clickable"
           v-b-toggle.section-collapse
@@ -64,45 +50,6 @@ export default {
   data() {
     return {
       sectionCollapsed: false,
-      filterButtons: [
-        {
-          text: 'Normal/spruce trees',
-          value: 'tree',
-          selected: true,
-          // image: require('@/assets/icons/tree.png'), // eslint-disable-line
-        },
-        {
-          text: 'Palm trees',
-          value: 'palm',
-          selected: true,
-          // image: require('@/assets/icons/palm.png'), // eslint-disable-line
-        },
-        {
-          text: 'Flying',
-          value: 'flying',
-          selected: true,
-        },
-        {
-          text: 'Flowers',
-          value: 'flower',
-          selected: true,
-        },
-        {
-          text: 'Ground',
-          value: 'ground',
-          selected: true,
-        },
-        {
-          text: 'Misc',
-          value: 'misc',
-          selected: true,
-        },
-        {
-          text: 'Tortimer Island',
-          value: 'tortimer',
-          selected: false,
-        },
-      ],
     };
   },
   methods: {
@@ -111,23 +58,6 @@ export default {
         return 'caret-down';
       }
       return 'caret-up';
-    },
-  },
-  computed: {
-    btnStates() {
-      return this.filterButtons.map((btn) => btn.selected);
-    },
-    bugArray() {
-      // eslint-disable-next-line
-      const selectedButtons = this.filterButtons.filter((btn) => btn.selected).map((btn) => btn.value);
-      if (selectedButtons.length < this.filterButtons.length) {
-        // eslint-disable-next-line
-        let filtered = this.bugs.filter((b) => selectedButtons.some((v) => b.location.toLowerCase().includes(v)));
-        filtered = this.$parent.sortArray(filtered);
-        filtered = this.$parent.reorderArray(filtered);
-        return filtered;
-      }
-      return this.bugs;
     },
   },
 };
