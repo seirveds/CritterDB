@@ -1,27 +1,16 @@
 .crittercard {
   max-width: 19rem;
-  /* display: inline-block; */
 }
 
 .crittercard > .card-header {
   padding-left: 0;
   padding-right: 0;
-}
-
-.crittercard.fish > header {
-  background-color: #66ccff;
+  background-color: #eff7f1;
 }
 
 .crittercard.bug > .card-body > .crittercard-body {
   min-height: 330px;
   padding-bottom: 0 !important;
-}
-.crittercard.bug > header {
-  background-color: #caed78;
-}
-
-.crittercard.seacreature > header {
-  background-color: #66a6ff;
 }
 
 .crittercard-body {
@@ -170,5 +159,20 @@
 
 .critter-button:hover {
   cursor: pointer;
-  /* color: white; */
+  color: gold;
+}
+
+.critter-count {
+  border-radius: 50%;
+  background-color: gold;
+  height: 1.8em;
+  width: 1.8em;
+}
+
+.divider {
+  margin-top: -1.5em;
+  margin-bottom: 1em;
+  margin-right: .5em;
+  width: 85%;
+  float: right;
 }

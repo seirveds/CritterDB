@@ -94,27 +94,36 @@
         </b-col>
       </b-row>
       <b-row>
-        <div class="critter-button-wrapper">
-          <div class="critter-button ml-4" id="fish" @click="critterButtonClick">
-            <h2 class="mb-0">
-              <font-awesome-icon icon="fa-solid fa-fish"/>
-            </h2>
-          </div>
-          <div class="critter-button" id="bugs" @click="critterButtonClick">
-            <h2 class="mb-0">
-              <font-awesome-icon icon="fa-solid fa-spider"/>
-            </h2>
-          </div>
-          <div class="critter-button"
-            v-if="sea_creature_games.includes(game_name)"
-            id="seacreatures"
-            @click="critterButtonClick"
-          >
-            <h2 class="mb-0">
-              <font-awesome-icon icon="fa-solid fa-person-swimming"/>
-            </h2>
-          </div>
-        </div>
+        <b-col>
+          <b-row>
+            <div class="critter-button-wrapper">
+              <div class="critter-button ml-4" id="fish" @click="critterButtonClick">
+                <h2 class="mb-0" >
+                  <font-awesome-icon icon="fa-solid fa-fish"/>
+                </h2>
+              </div>
+              <div class="critter-button" id="bug" @click="critterButtonClick">
+                <h2 class="mb-0">
+                  <font-awesome-icon icon="fa-solid fa-spider"/>
+                </h2>
+              </div>
+              <div class="critter-button"
+                v-if="sea_creature_games.includes(game_name)"
+                id="sea_creature"
+                @click="critterButtonClick"
+              >
+                <h2 class="mb-0">
+                  <font-awesome-icon icon="fa-solid fa-person-swimming"/>
+                </h2>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center;" class="ml-4">
+              <h2> {{ filters.critter_selection_map[filters.critter_selection] }}</h2>
+              <p class="critter-count mb-4"> {{ critters[filters.critter_selection].length }} </p>
+            </div>
+          </b-row>
+          <hr class="divider"/>
+        </b-col>
       </b-row>
       <!-- Content -->
       <b-row class="mt-3 mb-3">
@@ -125,11 +134,11 @@
               :fish="filteredArray(critters.fish)"
               :month_selected="filters.month_selected"
             />
-            <BugSection v-if="filters.critter_selection === 'bugs'"
+            <BugSection v-if="filters.critter_selection === 'bug'"
               :bugs="filteredArray(critters.bug)"
               :month_selected="filters.month_selected"
             />
-            <SeaCreatureSection v-if="filters.critter_selection === 'seacreatures'"
+            <SeaCreatureSection v-if="filters.critter_selection === 'sea_creature'"
               :seacreatures="filteredArray(critters.sea_creature)"
               :month_selected="filters.month_selected"
             />
@@ -199,6 +208,11 @@ export default {
         show_caught: true,
         last_month_only: false,
         critter_selection: 'fish',
+        critter_selection_map: {
+          fish: 'Fish',
+          bug: 'Bugs',
+          sea_creature: 'Sea Creatures',
+        },
       },
     };
   },
@@ -373,6 +387,7 @@ export default {
       return monthNo + 1;
     },
     critterButtonClick(event) {
+      // Change shown critter section based on button clicked
       this.filters.critter_selection = event.currentTarget.id;
     },
   },

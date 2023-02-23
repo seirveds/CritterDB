@@ -11,7 +11,7 @@
 - Client:
     - ~~fix dropdown header resetting after click~~
     - store navbar dropdown selection in local storage
-    - remove bug section icons
+    - ~~remove critter section icon filters~~
     - ~~all / available switch~~
     - ~~month filter~~
     - ~~location filter icons per section~~
@@ -36,6 +36,7 @@
         - ~~indicator~~
         - ~~filter~~
         - ~~Bug: last month indicator for unavailable critters~~
+    - Loading spinners when switching critter section
 - General
     - Add README
         - Install steps
