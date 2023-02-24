@@ -140,9 +140,11 @@
         </b-col>
       </b-row>
       <!-- Content -->
-      <b-row class="mt-3 mb-3">
+      <b-row class="mt-3 mb-3" style="min-height: 50vh">
         <b-col>
-          <b-spinner style="margin-top: 12vh" v-if="loading"/>
+          <div class="loading-gif-container" v-if="loading">
+            <img :src="loading_gif" class="loading-gif"/>
+          </div>
           <div v-else>
             <FishSection v-if="filters.critter_selection === 'fish'"
               :fish="filteredArray(critters.fish)"
@@ -190,6 +192,7 @@ export default {
         sea_creature: [],
       },
       loading: false,
+      loading_gif: require('@/assets/loading.gif'), // eslint-disable-line
       sea_creature_games: ['newleaf', 'newhorizons'],
       game_name: 'newhorizons', // default game selected
       col_count: null, // set in mounted()

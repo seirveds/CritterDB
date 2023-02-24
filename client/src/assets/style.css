@@ -190,3 +190,15 @@
   width: 85%;
   float: right;
 }
+
+.loading-gif {
+  width: 6em;
+  height: 6em;
+}
+
+.loading-gif-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
