@@ -58,11 +58,17 @@
 }
 
 .active-month {
-  background-color: #66a6ff5d;
+  background-color: #9acda380;
+  border-radius: 10px;
+  padding-left: .1em;
+  padding-right: .1em;
 }
 
 .active-time {
-  background-color: #66a6ff5d;
+  background-color: #9acda380;
+  border-radius: 20px;
+  padding-left: .3em;
+  padding-right: .3em;
 }
 
 .available-month {
@@ -159,14 +165,22 @@
 
 .critter-button:hover {
   cursor: pointer;
+}
+
+.critter-button-icon[active="true"] {
   color: gold;
 }
 
-.critter-count {
+.critter-button-icon:hover {
+  transform: scale(1.25);
+}
+
+.critter-count-container {
   border-radius: 50%;
   background-color: gold;
   height: 1.8em;
   width: 1.8em;
+  line-height: 1.9em;
 }
 
 .divider {

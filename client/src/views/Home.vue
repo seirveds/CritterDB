@@ -98,13 +98,21 @@
           <b-row>
             <div class="critter-button-wrapper">
               <div class="critter-button ml-4" id="fish" @click="critterButtonClick">
-                <h2 class="mb-0" >
-                  <font-awesome-icon icon="fa-solid fa-fish"/>
+                <h2 class="mb-0">
+                  <font-awesome-icon
+                    icon="fa-solid fa-fish"
+                    class="critter-button-icon"
+                    :active="filters.critter_selection === 'fish'"
+                  />
                 </h2>
               </div>
               <div class="critter-button" id="bug" @click="critterButtonClick">
                 <h2 class="mb-0">
-                  <font-awesome-icon icon="fa-solid fa-spider"/>
+                  <font-awesome-icon
+                    icon="fa-solid fa-spider"
+                    class="critter-button-icon"
+                    :active="filters.critter_selection === 'bug'"
+                  />
                 </h2>
               </div>
               <div class="critter-button"
@@ -113,13 +121,19 @@
                 @click="critterButtonClick"
               >
                 <h2 class="mb-0">
-                  <font-awesome-icon icon="fa-solid fa-person-swimming"/>
+                  <font-awesome-icon
+                    icon="fa-solid fa-person-swimming"
+                    class="critter-button-icon"
+                    :active="filters.critter_selection === 'sea_creature'"
+                  />
                 </h2>
               </div>
             </div>
             <div style="display: flex; align-items: center;" class="ml-4">
               <h2> {{ filters.critter_selection_map[filters.critter_selection] }}</h2>
-              <p class="critter-count mb-4"> {{ critters[filters.critter_selection].length }} </p>
+              <div class="critter-count-container mb-4 ml-1">
+                <p class="mb-0">{{ filteredArray(critters[filters.critter_selection]).length }}</p>
+              </div>
             </div>
           </b-row>
           <hr class="divider"/>
@@ -128,7 +142,7 @@
       <!-- Content -->
       <b-row class="mt-3 mb-3">
         <b-col>
-          <b-spinner style="margin-top: 20vh" v-if="loading"/>
+          <b-spinner style="margin-top: 12vh" v-if="loading"/>
           <div v-else>
             <FishSection v-if="filters.critter_selection === 'fish'"
               :fish="filteredArray(critters.fish)"
@@ -387,8 +401,14 @@ export default {
       return monthNo + 1;
     },
     critterButtonClick(event) {
+      // Use same loading spinner trick as in getData()
+      this.loading = true;
       // Change shown critter section based on button clicked
       this.filters.critter_selection = event.currentTarget.id;
+      // Short timeout while rendering, then hide spinner
+      setTimeout(() => {
+        this.loading = false;
+      }, 100);
     },
   },
   created() {

@@ -32,12 +32,14 @@
             - ~~Update api to include hemisphere argument~~
         - ~~Ability to clear local storage~~
     - ~~Hide loading spinner on finish rendering instead of fixed time~~
-    - Last month to catch
+    - ~~Last month to catch~~
         - ~~indicator~~
         - ~~filter~~
         - ~~Bug: last month indicator for unavailable critters~~
     - Loading spinners when switching critter section
+    - Crittercard redesign
 - General
     - Add README
         - Install steps
+    - docker nginx fix
     
