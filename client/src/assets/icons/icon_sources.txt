@@ -1,2 +1,0 @@
-pier.png https://www.flaticon.com/packs/landscapes-101?style_id=8&family_id=3&group_id=1
-pond.png river.png sea.png https://www.flaticon.com/packs/landscapes-97

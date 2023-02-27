@@ -36,8 +36,11 @@
         - ~~indicator~~
         - ~~filter~~
         - ~~Bug: last month indicator for unavailable critters~~
-    - Loading spinners when switching critter section
+    - Loading indicator when switching critter section
+        - ~~Gif instead of spinner~~
+        - Seasonal gif
     - Crittercard redesign
+    - show server not available errors
 - General
     - Add README
         - Install steps

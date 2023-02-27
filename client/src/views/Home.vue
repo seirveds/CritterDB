@@ -146,6 +146,9 @@
             <img :src="loading_gif" class="loading-gif"/>
           </div>
           <div v-else>
+            <div class="error" v-if="error !== null">
+              <h3 class="mb-0">{{ error }}<img :src="error_icon"/></h3>
+            </div>
             <FishSection v-if="filters.critter_selection === 'fish'"
               :fish="filteredArray(critters.fish)"
               :month_selected="filters.month_selected"
@@ -191,8 +194,10 @@ export default {
         bug: [],
         sea_creature: [],
       },
+      error: null,
       loading: false,
       loading_gif: require('@/assets/loading.gif'), // eslint-disable-line
+      error_icon: require('@/assets/icons/resetti_error.png'), // eslint-disable-line
       sea_creature_games: ['newleaf', 'newhorizons'],
       game_name: 'newhorizons', // default game selected
       col_count: null, // set in mounted()
@@ -238,6 +243,7 @@ export default {
       this.loading = true;
       this.$http.get(`${this.$server}/${this.game_name}/${this.filters.month_selected}${this.hemisphereString()}`)
         .then((res) => {
+          this.error = null;
           this.critters.fish = res.data.fish;
           this.critters.bug = res.data.bug;
           this.critters.sea_creature = res.data.sea_creature;
@@ -245,6 +251,7 @@ export default {
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
+          this.error = error.message;
         });
       // Somehow a short timeout makes it so spinner disappears when data is rendered
       setTimeout(() => {
