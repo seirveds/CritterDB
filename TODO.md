@@ -38,11 +38,14 @@
         - ~~Bug: last month indicator for unavailable critters~~
     - Loading indicator when switching critter section
         - ~~Gif instead of spinner~~
-        - Seasonal gif
     - Crittercard redesign
-    - show server not available errors
+    - ~~show server not available errors~~
+    - Unselect sea creatures when switching from new leaf/horizons to older game
+    - Format critter prices (with bell bag icon/svg)
+    - seasonal themes (not prio)
 - General
     - Add README
         - Install steps
+        - Docker steps
     - docker nginx fix
     

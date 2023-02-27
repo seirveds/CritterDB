@@ -145,10 +145,12 @@
           <div class="loading-gif-container" v-if="loading">
             <img :src="loading_gif" class="loading-gif"/>
           </div>
-          <div v-else>
-            <div class="error" v-if="error !== null">
+          <div v-else-if="error !== null">
+            <div class="error">
               <h3 class="mb-0">{{ error }}<img :src="error_icon"/></h3>
             </div>
+          </div>
+          <div v-else>
             <FishSection v-if="filters.critter_selection === 'fish'"
               :fish="filteredArray(critters.fish)"
               :month_selected="filters.month_selected"
@@ -252,6 +254,9 @@ export default {
           // eslint-disable-next-line
           console.error(error);
           this.error = error.message;
+          this.critters.fish = [];
+          this.critters.bug = [];
+          this.critters.sea_creature = [];
         });
       // Somehow a short timeout makes it so spinner disappears when data is rendered
       setTimeout(() => {
