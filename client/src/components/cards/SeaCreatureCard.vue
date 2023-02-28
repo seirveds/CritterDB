@@ -31,7 +31,9 @@
           <p class="mb-0"><b>Price: </b></p>
         </b-col>
         <b-col class="crittercard-r-col" cols="8">
-          <p class="mb-0">{{ selling_price }}</p>
+          <p class="mb-0">
+            <img :src="bells_icon" class="bells-icon"/>{{ selling_price.toLocaleString('en-US') }}
+          </p>
         </b-col>
       </b-row>
       <Availability
@@ -71,6 +73,11 @@ export default {
     Availability,
     CaughtFooter,
     TortimerIslandFlag,
+  },
+  data() {
+    return {
+      bells_icon: require('@/assets/icons/bellbag.png'),  // eslint-disable-line
+    };
   },
 };
 </script>

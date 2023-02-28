@@ -203,6 +203,14 @@
   justify-content: center;
 }
 
+.bells-icon {
+  height: 15px !important;
+  width: 15px !important;
+  margin-bottom: 5px !important;
+  margin-right: 2px !important;
+  image-rendering: auto !important;
+}
+
 .error {
   padding-top: 20px;
   display: flex;
