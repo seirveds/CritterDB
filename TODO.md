@@ -10,7 +10,6 @@
     - ~~(fish) in some fish names~~
 - Client:
     - ~~fix dropdown header resetting after click~~
-    - store navbar dropdown selection in local storage
     - ~~remove critter section icon filters~~
     - ~~all / available switch~~
     - ~~month filter~~
@@ -36,16 +35,18 @@
         - ~~indicator~~
         - ~~filter~~
         - ~~Bug: last month indicator for unavailable critters~~
-    - Loading indicator when switching critter section
+    - ~~Loading indicator when switching critter section~~
         - ~~Gif instead of spinner~~
-    - Crittercard redesign
     - ~~show server not available errors~~
     - ~~Unselect sea creatures when switching from new leaf/horizons to older game~~
-    - Format critter prices (with bell bag icon/svg  )
+    - ~~Format critter prices (with bell bag icon/svg)~~
+    - store navbar dropdown selection in local storage
+    - Crittercard redesign
+    - Filter interface
     - seasonal themes (not prio)
 - General
     - Add README
         - Install steps
         - Docker steps
-    - docker nginx fix
+    - ~~docker nginx fix~~
     
