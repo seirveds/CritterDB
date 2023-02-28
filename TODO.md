@@ -22,7 +22,7 @@
         - ~~Card order left to right instead of up to down per column~~
         - ~~All rows same height~~
     - ~~collapsible sections~~
-    - 404 handling
+    - ~~404 handling~~
     - ~~dockerize client~~
     - ~~New Leaf tortimer island flag~~
     - ~~User preferences storage~~

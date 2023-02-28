@@ -14,6 +14,11 @@ const routes = [
     name: 'Settings',
     component: () => import('../views/Settings.vue'),
   },
+  {
+    path: '*',
+    Name: '404 redirect',
+    redirect: '/',
+  },
 ];
 
 const router = new VueRouter({
