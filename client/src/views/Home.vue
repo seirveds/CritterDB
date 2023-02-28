@@ -264,6 +264,16 @@ export default {
       }, 800);
     },
     updateGameData(game) {
+      // When switching from game containing sea creatures to game that doesn't we
+      // reset the selected critters to fish if the sea creature section
+      // is currently selected
+      if (
+        this.sea_creature_games.includes(this.game_name)
+        && !this.sea_creature_games.includes(game)
+        && this.filters.critter_selection === 'sea_creature'
+      ) {
+        this.filters.critter_selection = 'fish';
+      }
       // Called when user selects game in header dropdown
       this.game_name = game;
       this.getData();

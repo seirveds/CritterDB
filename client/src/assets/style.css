@@ -213,6 +213,7 @@
 .error h3 {
   border-radius: 50px;
   padding: 10px;
+  padding-left: 1em;
   color: white;
   background: repeating-linear-gradient(
     -45deg,
