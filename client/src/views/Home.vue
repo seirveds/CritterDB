@@ -4,7 +4,7 @@
     <b-container class="mt-2 mb-5 pt-3">
       <!-- Filters + header -->
       <b-row>
-        <b-col class="text-left"><h1>{{ getAvailabilityHeader() }}</h1></b-col>
+        <b-col class="text-left ml-3 mt-2"><h1>{{ getAvailabilityHeader() }}</h1></b-col>
         <b-col class="text-right" cols="2">
           <h1 class="clickable"
             style="width: fit-content; float: right"

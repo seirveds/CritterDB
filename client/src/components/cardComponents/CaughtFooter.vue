@@ -3,7 +3,7 @@
     <b-row class="align-items-center">
       <b-col>
         <b-button
-          class="icon-button"
+          class="caught-button"
           onclick="this.blur();"
           v-b-tooltip.hover
           title="Mark as caught"

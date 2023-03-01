@@ -1,5 +1,7 @@
+/* Crittercard */
 .crittercard {
   max-width: 19rem;
+  margin-top: 60px !important;  /* Half of crittercard-icon height */
 }
 
 .crittercard > .card-header {
@@ -8,33 +10,19 @@
   background-color: #eff7f1;
 }
 
-.crittercard.bug > .card-body > .crittercard-body {
-  min-height: 330px;
+.crittercard.bug > .crittercard-body {
+  min-height: 300px;
   padding-bottom: 0 !important;
 }
 
+/* padding top must be half of crittercard-icon height */
 .crittercard-body {
-  padding: 0 1.25rem 1.25rem 1.25rem !important;
+  padding: 60px 1.25rem 1.25rem 1.25rem !important;
 }
 
-/* Padding 0 here to prevent footer from not touching sides of card */
-.crittercard .card-body {
-  padding: 0;
-}
-
-.crittercard .card-body img {
-  width: 128px;
-  height: 128px;
-  image-rendering: pixelated;
-}
-
-.card-footer {
-  margin-bottom: 0;
-}
-
-.critter-section-count {
-  font-size: 0.5em;
-  vertical-align: text-top;
+.crittercard-row {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .crittercard-l-col {
@@ -47,11 +35,52 @@
   padding: 0 !important;
 }
 
-.crittercard-row {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+/* Crittercard icons/images */
+.crittercard-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgb(248, 248, 248);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
+.crittercard-icon img {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated;
+}
+
+.caught-button {
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #2c3e50 !important;
+}
+
+.tortimer-island-icon {
+  width: 30px !important;
+  height: 30px !important;
+  image-rendering: pixelated;
+  position: absolute;
+  bottom: 89%;
+  left: 87%;
+}
+
+.bells-icon {
+  height: 15px !important;
+  width: 15px !important;
+  margin-bottom: 5px !important;
+  margin-right: 2px !important;
+  image-rendering: auto !important;
+}
+
+/* Availability.vue */
 .month-row {
   display: flex !important;
   justify-content: space-between !important;
@@ -75,6 +104,7 @@
   font-weight: bold;
 }
 
+/* Crittersection */
 @media (max-width: 990px) {
   .card-columns {
     column-count: 2 !important;
@@ -87,6 +117,7 @@
   }  
 }
 
+/* Global */
 .navbar {
   background-color: #9acda3;
 }
@@ -122,29 +153,8 @@
   flex: 1 !important;
 }
 
-.clickable:hover {
-  cursor: pointer;
-}
 
-.invisible {
-  display: none;
-}
-
-.icon-button {
-  padding: 0 !important;
-  background-color: transparent !important;
-  border-color: transparent !important;
-  color: #2c3e50 !important;
-}
-
-.tortimer-island-icon {
-  width: 25px !important;
-  height: 25px !important;
-  position: absolute;
-  bottom: 78%;
-  left: 85%;
-}
-
+/* Crittersection selection buttons */
 .critter-button-wrapper {
   display: flex;
 }
@@ -183,6 +193,7 @@
   line-height: 1.9em;
 }
 
+/* Misc */
 .divider {
   margin-top: -1.5em;
   margin-bottom: 1em;
@@ -191,6 +202,7 @@
   float: right;
 }
 
+/* Loading gif */
 .loading-gif {
   width: 6em;
   height: 6em;
@@ -203,14 +215,7 @@
   justify-content: center;
 }
 
-.bells-icon {
-  height: 15px !important;
-  width: 15px !important;
-  margin-bottom: 5px !important;
-  margin-right: 2px !important;
-  image-rendering: auto !important;
-}
-
+/* Errors */
 .error {
   padding-top: 20px;
   display: flex;
@@ -236,4 +241,13 @@
   width: 3em;
   height: 3em;
   margin-left: 1em;
+}
+
+/* Utilities */
+.clickable:hover {
+  cursor: pointer;
+}
+
+.invisible {
+  display: none;
 }
