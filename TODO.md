@@ -8,6 +8,7 @@
     - ~~Half month availability (mitten crab, moonlight jelly)~~
     - ~~Tortimer island availability fish/sea creatures~~
     - ~~(fish) in some fish names~~
+    - missing bug populatuion growing
 - Client:
     - ~~fix dropdown header resetting after click~~
     - ~~remove critter section icon filters~~
@@ -43,6 +44,8 @@
     - store navbar dropdown selection in local storage
     - Crittercard redesign
     - Filter interface
+    - 1 col when width < 576px
+    - 'num' on crittercard
     - seasonal themes (not prio)
 - General
     - Add README
