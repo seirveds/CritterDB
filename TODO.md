@@ -42,11 +42,16 @@
     - ~~Unselect sea creatures when switching from new leaf/horizons to older game~~
     - ~~Format critter prices (with bell bag icon/svg)~~
     - store navbar dropdown selection in local storage
-    - Crittercard redesign
+    - ~~Crittercard redesign~~
+    - crittersection button icons
     - Filter interface
     - 1 col when width < 576px
+        - Center crittercards
+        - Top divider overlapping
+        - card top margin too small
     - 'num' on crittercard
     - seasonal themes (not prio)
+    - text search (not prio)
 - General
     - Add README
         - Install steps

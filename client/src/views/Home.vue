@@ -333,7 +333,8 @@ export default {
     },
     reorderArray(arr) {
       // Handle edge case. On length 1 undefined would be added to array.
-      if (arr.length === 1) {
+      // On col count 1 there is no need to sort
+      if (arr.length === 1 || this.col_count === 1) {
         return arr;
       }
       // Reorders array based on amount of columns of cards in card group.
@@ -400,6 +401,9 @@ export default {
       // Simple logic determining amount of columns in frontend
       // depending on width of screen
       if (width <= 990) {
+        if (width < 576) {
+          return 1;
+        }
         return 2;
       }
       return 3;
