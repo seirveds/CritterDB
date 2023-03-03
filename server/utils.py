@@ -53,6 +53,7 @@ def shift_month(m: int) -> int:
         return 12
     return (m + 6) % 12
 
+
 def shift_month_availabilities(res: list[dict]) -> list[dict]:
     """ Update query result month availability to southern hemisphere"""
     # Doesn't scale very nicely :/
@@ -64,7 +65,7 @@ def shift_month_availabilities(res: list[dict]) -> list[dict]:
 def select_time_availability(res: list[dict], m: Union[int, None] = None) -> list[dict]:
     """
     Select available time for passed month from time_available entry.
-    Useurrent month if no month passed. We check if this month is present
+    Use current month if no month passed. We check if this month is present
     in time_available dict, if this is not the case, we pick a random month from
     the dict to return.
     """
@@ -86,10 +87,32 @@ def get_all_critters(game: str, hemisphere: str) -> dict:
     res = db.query(all_query.format(game=game))
     # Get time_available for current month if possible, otherwise
     # get time from a random month
+    # This is done because not all critters have the same time
+    # availablity each month they are available
     res = select_time_availability(res)
     if game == "newhorizons" and hemisphere == "s":
         res = shift_month_availabilities(res)
     return group_query_result(res)
+
+
+def fix_off_by_one(res: list[dict], h: int) -> list[dict]:
+    """
+    ONLY USE THIS WHEN FETCHING CURRENTLY AVAILABLE CRITTERS
+
+    Time availability is stored in such a way that the start hour is inclusive
+    but the end hour is not. E.g. time availability from 08 to 17 means the
+    critter starts spawning at 08 and stops spawning at 17. When getting
+    critters currently available this results in an off by one error when
+    checking time, as critters that stop spawning at 17 are still retrieved
+    when the time is 17:XX.
+
+    By making sure the final available hour is not the same as the current hour we
+    fix this error.
+
+    NOTE: does not work for critters with multiple ranges, need to do something smarter.
+    """
+    return [c for c in res if c["time_available"][-1] != h]
+
 
 
 def get_filtered_critters(game: str, month: str, hemisphere: str) -> dict:
@@ -110,6 +133,9 @@ def get_filtered_critters(game: str, month: str, hemisphere: str) -> dict:
     res = db.query(available_now_query.format(m=m, h=h, game=game))
     # Month chosen for time availability is passed month
     res = select_time_availability(res, m)
+
+    if month == "now":
+        res = fix_off_by_one(res, h)
 
     if southern_hemisphere:
         res = shift_month_availabilities(res)
