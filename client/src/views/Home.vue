@@ -95,7 +95,7 @@
       </b-row>
       <b-row>
         <b-col>
-          <b-row>
+          <b-row class="critter-section-selection">
             <div class="critter-button-wrapper">
               <div class="critter-button ml-4" id="fish" @click="critterButtonClick">
                 <h2 class="mb-0">
@@ -130,7 +130,9 @@
               </div>
             </div>
             <div style="display: flex; align-items: center;" class="ml-4">
-              <h2> {{ filters.critter_selection_map[filters.critter_selection] }}</h2>
+              <h2 class="critter-section-label">
+                {{ filters.critter_selection_map[filters.critter_selection] }}
+              </h2>
               <div class="critter-count-container mb-4 ml-1">
                 <p class="mb-0">{{ filteredArray(critters[filters.critter_selection]).length }}</p>
               </div>

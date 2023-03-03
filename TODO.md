@@ -43,12 +43,12 @@
     - ~~Format critter prices (with bell bag icon/svg)~~
     - store navbar dropdown selection in local storage
     - ~~Crittercard redesign~~
-    - crittersection button icons
-    - Filter interface
+    - crittersection button icons corect svg
+    - Filter interface redesign
     - 1 col when width < 576px
-        - Center crittercards
-        - Top divider overlapping
-        - card top margin too small
+        - ~~Center crittercards~~
+        - Top divider overlapping when sea creature selected
+        - ~~card top margin too small~~
     - 'num' on crittercard
     - seasonal themes (not prio)
     - text search (not prio)
