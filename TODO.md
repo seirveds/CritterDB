@@ -47,7 +47,7 @@
     - Filter interface redesign
     - 1 col when width < 576px
         - ~~Center crittercards~~
-        - Top divider overlapping when sea creature selected
+        - ~~Top divider overlapping when sea creature selected~~
         - ~~card top margin too small~~
     - 'num' on crittercard
     - seasonal themes (not prio)
