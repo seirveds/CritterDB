@@ -2,6 +2,7 @@
   <div class="card crittercard">
     <CrittercardIcon :image="image"/>
     <div class="crittercard-body">
+      <CrittercardNumber :num="num"/>
       <TortimerIslandFlag
         :game_name="game_name"
         :tortimerIslandExclusive="tortimer_island_exclusive"
@@ -28,6 +29,7 @@
 import Availability from '../cardComponents/Availability.vue';
 import CaughtFooter from '../cardComponents/CaughtFooter.vue';
 import CrittercardIcon from '../cardComponents/CrittercardIcon.vue';
+import CrittercardNumber from '../cardComponents/CrittercardNumber.vue';
 import CrittercardRow from '../cardComponents/CrittercardRow.vue';
 import CrittercardTitle from '../cardComponents/CrittercardTitle.vue';
 import TortimerIslandFlag from '../cardComponents/TortimerIslandFlag.vue';
@@ -51,6 +53,7 @@ export default {
     Availability,
     CaughtFooter,
     CrittercardIcon,
+    CrittercardNumber,
     CrittercardRow,
     CrittercardTitle,
     TortimerIslandFlag,

@@ -93,40 +93,26 @@
           </b-collapse>
         </b-col>
       </b-row>
+      <!-- Critter section selection buttons -->
       <b-row>
         <b-col>
           <b-row class="critter-section-selection">
             <div class="critter-button-wrapper">
               <div class="critter-button ml-4" id="fish" @click="critterButtonClick">
-                <h2 class="mb-0">
-                  <font-awesome-icon
-                    icon="fa-solid fa-fish"
-                    class="critter-button-icon"
-                    :active="filters.critter_selection === 'fish'"
-                  />
-                </h2>
+                <CritterSvg critter_type="fish" :active="filters.critter_selection === 'fish'"/>
               </div>
               <div class="critter-button" id="bug" @click="critterButtonClick">
-                <h2 class="mb-0">
-                  <font-awesome-icon
-                    icon="fa-solid fa-spider"
-                    class="critter-button-icon"
-                    :active="filters.critter_selection === 'bug'"
-                  />
-                </h2>
+                <CritterSvg critter_type="bug" :active="filters.critter_selection === 'bug'"/>
               </div>
               <div class="critter-button"
                 v-if="sea_creature_games.includes(game_name)"
                 id="sea_creature"
                 @click="critterButtonClick"
               >
-                <h2 class="mb-0">
-                  <font-awesome-icon
-                    icon="fa-solid fa-person-swimming"
-                    class="critter-button-icon"
-                    :active="filters.critter_selection === 'sea_creature'"
-                  />
-                </h2>
+                <CritterSvg
+                  critter_type="sea_creature"
+                  :active="filters.critter_selection === 'sea_creature'"
+                />
               </div>
             </div>
             <div style="display: flex; align-items: center;" class="ml-4">
@@ -178,6 +164,7 @@ import { _ } from 'vue-underscore';
 import BugSection from '../components/critterSections/BugSection.vue';
 import FishSection from '../components/critterSections/FishSection.vue';
 import SeaCreatureSection from '../components/critterSections/SeaCreatureSection.vue';
+import CritterSvg from '../components/CritterSvg.vue';
 
 import Footer from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
@@ -188,6 +175,7 @@ export default {
     BugSection,
     FishSection,
     SeaCreatureSection,
+    CritterSvg,
     Navbar,
     Footer,
   },

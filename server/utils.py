@@ -106,12 +106,14 @@ def fix_off_by_one(res: list[dict], h: int) -> list[dict]:
     checking time, as critters that stop spawning at 17 are still retrieved
     when the time is 17:XX.
 
-    By making sure the final available hour is not the same as the current hour we
-    fix this error.
+    By checking if the next hour is also in time availability we can filter out
+    the off by one errors.
 
     NOTE: does not work for critters with multiple ranges, need to do something smarter.
     """
-    return [c for c in res if c["time_available"][-1] != h]
+    # Wrap around to 0 if time is 23
+    next_h = h + 1 if h < 23 else 0
+    return [c for c in res if h in c["time_available"] and next_h in c["time_available"]]
 
 
 

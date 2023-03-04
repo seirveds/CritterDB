@@ -117,7 +117,6 @@ export default {
       let outString = '';  // eslint-disable-line
       const d = new Date();
       const currentHour = d.getHours();
-      console.log(currentHour);
       for (let i = 0; i < ranges.length; i += 1) {
         let spanClass = '';
         // Two cases for a range; first hour is smaller than the second hour (easy)

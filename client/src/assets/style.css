@@ -1,4 +1,8 @@
 /* Crittercard */
+.card {
+  border-radius: 10px !important;
+}
+
 .crittercard {
   max-width: 19rem;
   margin-top: 60px !important;  /* Half of crittercard-icon height */
@@ -78,6 +82,25 @@
   margin-bottom: 5px !important;
   margin-right: 2px !important;
   image-rendering: auto !important;
+}
+
+.crittercard-number {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background-color: rgb(248, 248, 248);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  /* Same as tortimer-island-icon but right instead of left */
+  bottom: 89%;
+  right: 87%;
+}
+
+.crittercard-number > p {
+  margin-bottom: 0;
 }
 
 /* Availability.vue */
@@ -205,8 +228,13 @@
   cursor: pointer;
 }
 
-.critter-button-icon[active="true"] {
-  color: gold;
+.critter-svg {
+  width: 2.5em !important;
+  height: 2.5em !important;
+}
+
+.critter-svg[active="true"] {
+  color: gold !important;
 }
 
 .critter-button-icon:hover {
@@ -269,6 +297,7 @@
   width: 3em;
   height: 3em;
   margin-left: 1em;
+  margin-right: 1em;
 }
 
 /* Utilities */
