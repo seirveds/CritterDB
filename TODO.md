@@ -4,6 +4,7 @@
     - ~~month as argument~~
     - ~~doubles in sea creatures~~
     - ~~dockerize server~~
+    - Setup production grade server
 - Scraper/data:
     - ~~Half month availability (mitten crab, moonlight jelly)~~
     - ~~Tortimer island availability fish/sea creatures~~
@@ -45,6 +46,7 @@
     - ~~Crittercard redesign~~
     - ~~crittersection button icons corect svg~~
     - Filter interface redesign
+    - ~~New font~~
     - ~~1 col when width < 576px~~
         - ~~Center crittercards~~
         - ~~Top divider overlapping when sea creature selected~~

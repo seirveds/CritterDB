@@ -1,3 +1,21 @@
+@font-face {
+  font-family: critterDBFontBold;
+  src: url("fonts/FOT-Rodin Pro DB.otf") format("opentype");
+}
+
+@font-face {
+  font-family: critterDBFont;
+  src: url("fonts/FOT-Rodin Pro M.otf") format("opentype");
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: critterDBFontBold !important;
+}
+
+p, label, select, .tooltip {
+  font-family: critterDBFont !important;
+}
+
 /* Crittercard */
 .card {
   border-radius: 10px !important;
