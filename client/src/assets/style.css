@@ -1,3 +1,4 @@
+/* Fonts */
 @font-face {
   font-family: critterDBFontBold;
   src: url("fonts/FOT-Rodin Pro DB.otf") format("opentype");
@@ -119,6 +120,8 @@ p, label, select, span, .tooltip {
 
 .crittercard-number > p {
   margin-bottom: 0;
+  margin-right: 0.1rem;  /* Makes it look more centered */
+  font-size: 0.7rem;
 }
 
 /* Availability.vue */
@@ -156,6 +159,13 @@ p, label, select, span, .tooltip {
   .card-columns {
     column-count: 2 !important;
   }  
+}
+
+@media (max-width: 768px) {
+  .crittercard-number {
+    /* Prevents div from hugging border */
+    right: 84% !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -262,9 +272,16 @@ p, label, select, span, .tooltip {
 .critter-count-container {
   border-radius: 50%;
   background-color: gold;
-  height: 1.8em;
-  width: 1.8em;
-  line-height: 1.9em;
+  height: 2.1em;
+  width: 2.1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.critter-count-container > p {
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 /* Misc */
