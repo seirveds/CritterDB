@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Navbar @selected-game-change="updateGameData"/>
+    <Navbar @selected-game-change="updateGameDataFromNavbar"/>
     <b-container class="mt-2 mb-5 pt-3">
       <!-- Filters + header -->
       <b-row>
@@ -20,38 +20,7 @@
         <b-col class="text-left">
           <b-collapse id="filter-collapse">
             <b-card>
-              <!-- All/available filter -->
-              <b-row class="mb-1">
-                <b-col xl="1" lg="2" sm="3">
-                  <p class="mb-0"><b>Show:</b></p>
-                </b-col>
-                <b-col lg="10" sm="12">
-                  <b-form-group>
-                    <b-form-radio-group
-                      v-model="filters.month_selected"
-                      @change="getData"
-                    >
-                      <b-form-radio value="all">All</b-form-radio>
-                      <b-form-radio value="now">Available now</b-form-radio>
-                    </b-form-radio-group>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-              <!-- Month filter -->
-              <b-row class="mb-1">
-                <b-col xl="1" lg="2" sm="3">
-                  <p class="mb-0"><b>Month:</b></p>
-                </b-col>
-                <b-col lg="10" sm="12">
-                  <b-form-select
-                    v-model="filters.month_selected"
-                    @change="getData"
-                    class="w-25 pt-0 pb-0"
-                    :options="filters.month_options"
-                  >
-                  </b-form-select>
-                </b-col>
-              </b-row>
+              <MonthFilter @selected-month-change="updateGameDataFromMonthSelection"/>
               <hr/>
               <!-- Sort by -->
               <b-row class="mb-1">
@@ -166,6 +135,8 @@ import FishSection from '../components/critterSections/FishSection.vue';
 import SeaCreatureSection from '../components/critterSections/SeaCreatureSection.vue';
 import CritterSvg from '../components/CritterSvg.vue';
 
+import MonthFilter from '../components/filterComponents/MonthFilter.vue';
+
 import Footer from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
 
@@ -178,6 +149,7 @@ export default {
     CritterSvg,
     Navbar,
     Footer,
+    MonthFilter,
   },
   data() {
     return {
@@ -253,7 +225,7 @@ export default {
         this.loading = false;
       }, 800);
     },
-    updateGameData(game) {
+    updateGameDataFromNavbar(game) {
       // When switching from game containing sea creatures to game that doesn't we
       // reset the selected critters to fish if the sea creature section
       // is currently selected
@@ -266,6 +238,11 @@ export default {
       }
       // Called when user selects game in header dropdown
       this.game_name = game;
+      this.getData();
+    },
+    updateGameDataFromMonthSelection(month) {
+      // Set selected month before retrieving new data
+      this.filters.month_selected = month;
       this.getData();
     },
     hemisphereString() {

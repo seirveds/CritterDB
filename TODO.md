@@ -54,6 +54,7 @@
     - ~~'num' on crittercard~~
     - seasonal themes (not prio)
     - text search (not prio)
+    - time filter (not prio)
 - General
     - Add README
         - Install steps

@@ -9,11 +9,11 @@
   src: url("fonts/FOT-Rodin Pro M.otf") format("opentype");
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .title {
   font-family: critterDBFontBold !important;
 }
 
-p, label, select, span, .tooltip {
+p, a, label, select, span, .tooltip {
   font-family: critterDBFont !important;
 }
 
@@ -342,4 +342,19 @@ p, label, select, span, .tooltip {
 
 .invisible {
   display: none;
+}
+
+.cell {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 5px !important;
+  text-align: center !important;
+}
+
+.cell > p {
+  margin: 0;
+}
+
+.cell[active="true"] > p {
+  background-color: #9acda380;
+  border-radius: 10px;
 }
