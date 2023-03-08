@@ -10,4 +10,4 @@ COPY . /app
 
 EXPOSE 5000
 
-CMD python -m flask --app app/app.py run --host=0.0.0.0
+CMD waitress-serve --host 0.0.0.0 --port 5000 --expose-tracebacks app:app

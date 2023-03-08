@@ -32,3 +32,7 @@ def month_available(game: str, month: str, hemisphere: str = 'n') -> Response:
     if res := get_filtered_critters(game=game, month=month, hemisphere=hemisphere):
         return make_response(res, 200)
     return make_response(empty_data_error, 500)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
