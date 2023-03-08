@@ -28,7 +28,7 @@ Vue.use(BootstrapVueIcons);
 Vue.use(underscore);
 
 // Global vars
-Vue.prototype.$server = 'http://127.0.0.1:5000';
+Vue.prototype.$server = 'http://localhost:5000';
 Vue.prototype.$http = axios;
 
 new Vue({
