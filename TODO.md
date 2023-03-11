@@ -4,7 +4,7 @@
     - ~~month as argument~~
     - ~~doubles in sea creatures~~
     - ~~dockerize server~~
-    - Setup production grade server
+    - ~~Setup production grade server~~
 - Scraper/data:
     - ~~Half month availability (mitten crab, moonlight jelly)~~
     - ~~Tortimer island availability fish/sea creatures~~
@@ -55,6 +55,7 @@
     - seasonal themes (not prio)
     - text search (not prio)
     - time filter (not prio)
+    - Yellow birds footer (not prio)
 - General
     - Add README
         - Install steps

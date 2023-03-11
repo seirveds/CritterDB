@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <p><b>Time of year:</b></p>
+    <p style="margin-left: 15px;"><b>Time of year:</b></p>
     <b-col cols="12" sm="10" md="8" lg="6">
       <b-row class="justify-content-center">
         <MonthFilterCell
