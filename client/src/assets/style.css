@@ -145,7 +145,7 @@ p, a, label, select, span, .tooltip {
 }
 
 .available-month {
-  font-weight: bold;
+  font-family: critterDBFontBold !important;
 }
 
 /* Crittersection */

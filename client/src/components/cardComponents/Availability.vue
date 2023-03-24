@@ -57,14 +57,41 @@ export default {
   },
   methods: {
     getMonthNo() {
+      // NOTE duplicate exists in Home.vue
+      // Get selected month number, taking into account an 'all' or 'now' selection
       let monthNo = null;
+      // Easy, just get current month
       if (this.month_selected === 'all' || this.month_selected === 'now') {
+        // Use current month
         const d = new Date();
         monthNo = d.getMonth() + 1;
+      // Transform month name string into month number
       } else {
         monthNo = this.months.filter((d) => d.name === this.month_selected)[0].num;
       }
+      // If user is in southern hemisphere and New Horizons is selected as game,
+      // shift month by half a year
+      if (this.hemisphereString() === 's') {
+        monthNo = this.shiftMonth(monthNo);
+      }
       return monthNo;
+    },
+    hemisphereString() {
+      // NOTE duplicate exists in Home.vue
+      if (this.game_name === 'newhorizons') {
+        if (!localStorage.hemisphere) {
+          // Default value
+          localStorage.hemisphere = 'n';
+        }
+        return `${localStorage.hemisphere}`;
+      }
+      // Not needed if not New Horizons
+      return '';
+    },
+    shiftMonth(m) {
+      // NOTE duplicate exists in Home.vue
+      // Shifts month number to southern hemisphere
+      return m === 6 ? 12 : (m + 6) % 12;
     },
     styleMonthAbbr(m) {
       let out = '';

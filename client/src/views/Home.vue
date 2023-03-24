@@ -209,25 +209,20 @@ export default {
       this.loading = true;
 
       const gameJson = this.json[this.game_name];
-
-      console.log(this.getMonthNo());
-      console.log(gameJson);
-
       this.critters.fish = this.getDataFilter(gameJson.fish);
       this.critters.bug = this.getDataFilter(gameJson.bug);
       this.critters.sea_creature = this.getDataFilter(gameJson.sea_creature);
 
-      this.loading = false;
+      // Somehow a short timeout makes it so spinner disappears when data is rendered
+      setTimeout(() => {
+        this.loading = false;
+      }, 400);
     },
     getDataFilter(arr) {
-      let filtered = arr;
+      // Deep copy needed to prevent odd behaviour
+      let filtered = structuredClone(arr); // eslint-disable-line
+      // monthNo also includes hemisphere logic
       const monthNo = this.getMonthNo();
-
-      // Selected month filter
-      if (this.filters.month_selected !== 'all') {
-        // TODO hemisphere shift
-        filtered = arr.filter((entry) => entry.months_available.includes(monthNo));
-      }
 
       // Transform time_availability object into array containing times for current month
       for (let i = 0; i < filtered.length; i += 1) {
@@ -249,15 +244,27 @@ export default {
         }
       }
 
+      // Selected month filter
+      if (this.filters.month_selected !== 'all') {
+        // TODO hemisphere shift
+        filtered = filtered.filter((entry) => entry.months_available.includes(monthNo));
+      }
+
       // Time filter when selection is 'now'
       if (this.filters.month_selected === 'now') {
-        const d = new Date();
-        const hour = d.getHours();
+        const hour = this.getHour();
         const nextHour = hour < 23 ? hour + 1 : 0;
-        filtered = filtered.filter((entry) => (
-          entry.time_available.includes(hour)
-          && entry.time_available.includes(nextHour)
-        ));
+        // eslint-disable-next-line
+        filtered = filtered.filter((entry) => (entry.time_available.includes(hour) && entry.time_available.includes(nextHour)));
+      }
+
+      // Shift available months by 6 months if user is in southern hemisphere
+      // This is only cosmetic as filtering has alrady been done.
+      if (this.hemisphereString() === 's') {
+        for (let i = 0; i < filtered.length; i += 1) {
+          // eslint-disable-next-line
+          filtered[i].months_available = filtered[i].months_available.map((m) => this.shiftMonth(m));
+        }
       }
 
       return filtered;
@@ -283,12 +290,15 @@ export default {
       this.getData();
     },
     hemisphereString() {
+      // NOTE duplicate exists in Availability.vue
       if (this.game_name === 'newhorizons') {
         if (!localStorage.hemisphere) {
+          // Default value
           localStorage.hemisphere = 'n';
         }
-        return `/${localStorage.hemisphere}`;
+        return `${localStorage.hemisphere}`;
       }
+      // Not needed if not New Horizons
       return '';
     },
     sortAndReorderData() {
@@ -318,7 +328,8 @@ export default {
       if (this.filters.last_month_only) {
         const currMonth = this.getMonthNo();
         const nextMonth = this.getNextMonthNo();
-        out = out.filter((c) => !c.months_available.includes(nextMonth) && c.months_available.includes(currMonth)); // eslint-disable-line
+        // eslint-disable-next-line
+        out = out.filter((c) => !c.months_available.includes(nextMonth) && c.months_available.includes(currMonth));
       }
 
       // Sort using selected sort filter
@@ -415,14 +426,29 @@ export default {
       }
       return 3;
     },
+    getHour() {
+      // Get current hour
+      const d = new Date();
+      return d.getHours();
+    },
     getMonthNo() {
+      // NOTE duplicate exists in Availability.vue
+      // Get selected month number, taking into account an 'all' or 'now' selection
       let monthNo = null;
+      // Easy, just get current month
       if (this.filters.month_selected === 'all' || this.filters.month_selected === 'now') {
         // Use current month
         const d = new Date();
         monthNo = d.getMonth() + 1;
+      // Transform month name string into month number
       } else {
-        monthNo = this.filters.month_options.filter((d) => d.value === this.filters.month_selected)[0].num;  // eslint-disable-line
+        // eslint-disable-next-line
+        monthNo = this.filters.month_options.filter((d) => d.value === this.filters.month_selected)[0].num;
+      }
+      // If user is in southern hemisphere and New Horizons is selected as game,
+      // shift month by half a year
+      if (this.hemisphereString() === 's') {
+        monthNo = this.shiftMonth(monthNo);
       }
       return monthNo;
     },
@@ -435,6 +461,11 @@ export default {
       }
       // Otherwise just month + 1
       return monthNo + 1;
+    },
+    shiftMonth(m) {
+      // NOTE duplicate exists in Availability.vue
+      // Shifts month number to southern hemisphere
+      return m === 6 ? 12 : (m + 6) % 12;
     },
     critterButtonClick(event) {
       // Use same loading spinner trick as in getData()
