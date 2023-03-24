@@ -140,8 +140,9 @@ import MonthFilter from '../components/filterComponents/MonthFilter.vue';
 import Footer from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
 
+import CritterJson from '../assets/critters.json';
+
 export default {
-  name: 'NewHorizons',
   components: {
     BugSection,
     FishSection,
@@ -153,6 +154,7 @@ export default {
   },
   data() {
     return {
+      json: CritterJson,
       critters: {
         fish: [],
         bug: [],
@@ -205,25 +207,60 @@ export default {
   methods: {
     getData() {
       this.loading = true;
-      this.$http.get(`${this.$server}/${this.game_name}/${this.filters.month_selected}${this.hemisphereString()}`)
-        .then((res) => {
-          this.error = null;
-          this.critters.fish = res.data.fish;
-          this.critters.bug = res.data.bug;
-          this.critters.sea_creature = res.data.sea_creature;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
-          this.error = error.message;
-          this.critters.fish = [];
-          this.critters.bug = [];
-          this.critters.sea_creature = [];
-        });
-      // Somehow a short timeout makes it so spinner disappears when data is rendered
-      setTimeout(() => {
-        this.loading = false;
-      }, 800);
+
+      const gameJson = this.json[this.game_name];
+
+      console.log(this.getMonthNo());
+      console.log(gameJson);
+
+      this.critters.fish = this.getDataFilter(gameJson.fish);
+      this.critters.bug = this.getDataFilter(gameJson.bug);
+      this.critters.sea_creature = this.getDataFilter(gameJson.sea_creature);
+
+      this.loading = false;
+    },
+    getDataFilter(arr) {
+      let filtered = arr;
+      const monthNo = this.getMonthNo();
+
+      // Selected month filter
+      if (this.filters.month_selected !== 'all') {
+        // TODO hemisphere shift
+        filtered = arr.filter((entry) => entry.months_available.includes(monthNo));
+      }
+
+      // Transform time_availability object into array containing times for current month
+      for (let i = 0; i < filtered.length; i += 1) {
+        // Because of some caching we sometimes dont get fresh data from json. So
+        // We need to check if the availability is not already an array. If it is
+        // we do nothing, otherwise we want to get the correct time array from
+        // the time_availability object
+        if (!(filtered[i].time_available instanceof Array)) {
+          let indexToGet = null;
+          // Try to use the current/selected month for time availability
+          // This is not always possible when we want all critters, in this
+          // case we simply take the first time availability array
+          if (monthNo in filtered[i].time_available) {
+            indexToGet = monthNo;
+          } else {
+            indexToGet = Object.keys(filtered[i].time_available)[0];  // eslint-disable-line
+          }
+          filtered[i].time_available = filtered[i].time_available[indexToGet];
+        }
+      }
+
+      // Time filter when selection is 'now'
+      if (this.filters.month_selected === 'now') {
+        const d = new Date();
+        const hour = d.getHours();
+        const nextHour = hour < 23 ? hour + 1 : 0;
+        filtered = filtered.filter((entry) => (
+          entry.time_available.includes(hour)
+          && entry.time_available.includes(nextHour)
+        ));
+      }
+
+      return filtered;
     },
     updateGameDataFromNavbar(game) {
       // When switching from game containing sea creatures to game that doesn't we
@@ -266,6 +303,7 @@ export default {
       this.critters.sea_creature = this.reorderArray(this.critters.sea_creature);
     },
     filteredArray(arr) {
+      // Filters data arrays based on filters selected in front-end
       if (arr === undefined) {
         return [];
       }
@@ -299,15 +337,17 @@ export default {
       return _.sortBy(arr, this.filters.sort_selection);
     },
     reorderArray(arr) {
+      // Reorders array based on amount of columns of cards in card group.
+      // By default the order is top to bottom from left to right column but
+      // this is not intuitive. Here we shift the data in such a way the order
+      // if left to right top to bottom
+
       // Handle edge case. On length 1 undefined would be added to array.
       // On col count 1 there is no need to sort
       if (arr.length === 1 || this.col_count === 1) {
         return arr;
       }
-      // Reorders array based on amount of columns of cards in card group.
-      // By default the order is top to bottom from left to right column but
-      // this is not intuitive. Here we shift the data in such a way the order
-      // if left to right top to bottom
+
       let out = [];
       // Amount of cards per column is roughly the total amount of cards
       // divided by amount of columns rounded up

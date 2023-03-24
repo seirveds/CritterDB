@@ -117,7 +117,6 @@ export default {
   methods: {
     monthSelected(month) {
       this.selected_month = month;
-      console.log(month, this.months_translation[month]);
       this.$emit('selected-month-change', this.months_translation[month]);
     },
   },

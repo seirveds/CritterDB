@@ -45,17 +45,21 @@
     - store navbar dropdown selection in local storage
     - ~~Crittercard redesign~~
     - ~~crittersection button icons corect svg~~
-    - Filter interface redesign
     - ~~New font~~
     - ~~1 col when width < 576px~~
         - ~~Center crittercards~~
         - ~~Top divider overlapping when sea creature selected~~
         - ~~card top margin too small~~
     - ~~'num' on crittercard~~
+    - Filter interface redesign
+    - Empty result warning
     - seasonal themes (not prio)
     - text search (not prio)
     - time filter (not prio)
     - Yellow birds footer (not prio)
+- Refactor
+    - Remove server
+    - Doubles (octopus NH)
 - General
     - Add README
         - Install steps
