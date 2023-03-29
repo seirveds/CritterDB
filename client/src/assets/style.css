@@ -206,11 +206,20 @@ p, a, label, select, span, .tooltip {
   color: white;
   min-height: 6em;
   padding-top: 0.75em;
+  position: relative;
 }
 
 .footer a {
   color: white;
   text-decoration: none;
+}
+
+.footer-image {
+  width: 125px;
+  height: 125px;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
 }
 
 #app {
