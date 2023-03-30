@@ -190,10 +190,6 @@ p, a, label, select, span, .tooltip {
     width: 3em !important;
     height: 3em !important;
   }
-
-  .critter-button > h2 {
-    font-size: 1.5rem !important;
-  }
 }
 
 /* Global */
@@ -204,9 +200,20 @@ p, a, label, select, span, .tooltip {
 .footer {
   background-color: #9acda3;
   color: white;
-  min-height: 6em;
+  height: 6em;
   padding-top: 0.75em;
   position: relative;
+}
+
+.footer::before {
+  background-image: url("icons/footer_wave.png");
+  content: "";
+  height: 15px;
+  left: 0;
+  position: absolute;
+  top: -15px;
+  width: 100%;
+  z-index: 10;
 }
 
 .footer a {
@@ -215,8 +222,8 @@ p, a, label, select, span, .tooltip {
 }
 
 .footer-image {
-  width: 125px;
-  height: 125px;
+  width: 100px;
+  height: 100px;
   position: absolute;
   right: 0;
   bottom: 100%;
@@ -270,6 +277,15 @@ p, a, label, select, span, .tooltip {
   height: 2.5em !important;
 }
 
+@media (max-width: 576px) {
+  .critter-svg {
+    /* 75% of original size, just as critter-button */
+    width: 1.875em !important;
+    height: 1.875em !important;
+  }
+}
+
+
 .critter-svg[active="true"] {
   color: gold !important;
 }
@@ -291,6 +307,18 @@ p, a, label, select, span, .tooltip {
 .critter-count-container > p {
   font-size: 1.1rem;
   margin: 0;
+}
+
+
+@media (max-width: 576px) {
+  .critter-count-container {
+    height: 1.6em;
+    width: 1.6em;
+  }
+
+  .critter-count-container > p {
+    font-size: 0.8rem;
+  }
 }
 
 /* Misc */
