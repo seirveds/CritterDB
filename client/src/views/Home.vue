@@ -219,6 +219,9 @@ export default {
       }, 400);
     },
     getDataFilter(arr) {
+      if (arr === undefined) {
+        return [];
+      }
       // Deep copy needed to prevent odd behaviour
       let filtered = structuredClone(arr); // eslint-disable-line
       // monthNo also includes hemisphere logic
