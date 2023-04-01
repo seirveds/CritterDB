@@ -1,30 +1,34 @@
 <template>
-  <b-navbar toggleable="lg" type="dark">
+  <b-navbar toggleable="sm" type="dark">
     <b-navbar-brand href="/" class="title">CritterDB</b-navbar-brand>
 
-      <b-navbar-nav v-if="showNavDropdown">
-        <b-nav-item-dropdown
-          v-model="navbar.selection"
-          :text="navbar.selection"
+    <b-navbar-nav v-if="showNavDropdown" class="mr-auto">
+      <b-nav-item-dropdown
+        v-model="navbar.selection"
+        :text="navbar.selection"
+      >
+        <b-dropdown-item
+          v-for="option in navbar.options"
+          :key="option.value"
+          :value="option.value"
+          :active="option.text == navbar.selection"
+          :disabled="option.disabled"
+          :href="option.href"
+          @click="navbarClick(option)"
         >
-          <b-dropdown-item
-            v-for="option in navbar.options"
-            :key="option.value"
-            :value="option.value"
-            :active="option.text == navbar.selection"
-            :disabled="option.disabled"
-            :href="option.href"
-            @click="navbarClick(option)"
-          >
-            {{  option.text }}
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+          {{  option.text }}
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-navbar-nav>
 
-      <!-- Right aligned nav items -->
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <!-- Right aligned nav items -->
+    <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item href="/settings"><b-icon icon="gear" aria-hidden="true"/>Settings</b-nav-item>
       </b-navbar-nav>
+    </b-collapse>
   </b-navbar>
 </template>
 
