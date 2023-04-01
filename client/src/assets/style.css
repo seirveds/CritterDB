@@ -293,6 +293,18 @@ p, a, label, select, span, .tooltip {
   float: right;
 }
 
+.filter-loading-overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px; /* Same as card element */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backdrop-filter: blur(1px);
+}
+
 /* Loading gif */
 .loading-gif {
   width: 6em;

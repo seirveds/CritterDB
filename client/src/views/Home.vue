@@ -20,6 +20,9 @@
         <b-col class="text-left">
           <b-collapse id="filter-collapse">
             <b-card>
+              <div v-if="loading" class="filter-loading-overlay loading-gif-container">
+                <img :src="loading_gif" class="loading-gif"/>
+              </div>
               <MonthFilter @selected-month-change="updateGameDataFromMonthSelection"/>
               <hr/>
               <!-- Sort by -->
