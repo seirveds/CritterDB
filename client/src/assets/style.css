@@ -197,6 +197,11 @@ p, a, label, select, span, .tooltip {
   background-color: #9acda3;
 }
 
+.navbar-nav .dropdown-menu {
+  /* Prevents dropdown from vertically stretching navbar */
+  position: absolute;
+}
+
 .footer {
   background-color: #9acda3;
   color: white;
@@ -222,7 +227,7 @@ p, a, label, select, span, .tooltip {
 }
 
 .footer-image {
-  width: 100px;
+  width: 110px;
   height: 100px;
   position: absolute;
   right: 0;
