@@ -8,7 +8,7 @@
 
     export let selectedGame = "newhorizons";
     export let filters = {
-        "crittertype": "fish",
+        "crittertype": "bug",
         "month": currentMonth(),
         "time": currentTime(),
         "all": false,
