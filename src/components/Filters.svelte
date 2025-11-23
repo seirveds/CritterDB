@@ -77,11 +77,11 @@
 
 <div class="filter-tabs">
     <div class="left" style="z-index: 1">
-        <button class={ filters.crittertype == "fish" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("fish")}}>
-            <Icons name="fish" class="filter-icon"/>
-        </button>
         <button class={ filters.crittertype == "bug" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("bug")}}>
             <Icons name="bug" class="filter-icon"/>
+        </button>
+        <button class={ filters.crittertype == "fish" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("fish")}}>
+            <Icons name="fish" class="filter-icon"/>
         </button>
         {#if ["newhorizons", "newleaf"].includes(selectedGame)}
             <button class={ filters.crittertype == "sea_creature" ? "nav-button active" : "nav-button"} on:click={() => {navButtonClick("sea_creature")}}>
